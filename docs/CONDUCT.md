@@ -108,4 +108,4 @@ This Code of Conduct is adapted from the [Contributor Covenant][homepage], versi
 
 Each member must add their signature below as a Markdown image and commit it themselves
 
-![Signature of Brandon Cordon](https://drive.google.com/file/d/1PxtHnkt524jOfjLYRDF-bn4Dg_fQ0E3l/view?usp=sharing)
+![Signature of Brandon Cordon](https://drive.google.com/uc?id=1PxtHnkt524jOfjLYRDF-bn4Dg_fQ0E3l)
