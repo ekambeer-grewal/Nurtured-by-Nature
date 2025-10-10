@@ -110,4 +110,4 @@ Each member must add their signature below as a Markdown image and commit it the
 
 ![Signature of Brandon Cordon](https://drive.google.com/uc?id=1PxtHnkt524jOfjLYRDF-bn4Dg_fQ0E3l)
 
-![Signature of Ekambeer grewal](https://drive.google.com/file/d/106Fr4W_Mq9eC-HcUBld740iR_YA6EKse)
+![Signature of Ekambeer grewal](https://drive.google.com/file/d/106Fr4W_Mq9eC-HcUBld740iR_YA6EKse/view?usp=sharing)
