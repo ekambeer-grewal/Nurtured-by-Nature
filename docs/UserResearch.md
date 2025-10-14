@@ -52,3 +52,21 @@ This demonstrates that users want a low stress tracker that lightly encourages t
 ### **Team Action (if any)** 
 - Design a **progress tracker** for the app that when fufilled, the user **receives a reward**, visual feedback would probably be best.
 - create a **calm, serene environment** for the app, make sure it does not stress the user out, provides a relaxing shelter for user to escape to. 
+
+---
+
+## What is something you wish to improve about your daily routine? 
+
+### **Observation Statement**
+Students generally want to have better structure of their time and management of hobbies/health. Most of these goals are small, attainable tasks that don't require a complete overhaul of their life, just general time management and desiring consistency.
+
+### **Supporting Data**
+- **10 written responses** mention wanting **"consistency"**, **"structure"**, or a **"schedule"**, that is roughly **≈40%** of all responses.
+- **7 written responses** mention wanting small lifestyle habit improvements, such as **dietary**, **hobbies**, and other **general health/fitness** habits, that is about **≈33%** of responses.
+
+
+### **Team Action (if any)** 
+- Incorporating a **scheduler** that allows users to keep track of their activities
+- Add **customizable reminders** and **nudges** to help users build consistency and stay on track with their routines.
+- Offer optional **accountability features**, like **sharing progress with friends** or setting **group challenges**, to increase motivation.
+- **Gamify consistency** (e.g., points, levels, or milestones) to make sticking to routines more fun and satisfying
