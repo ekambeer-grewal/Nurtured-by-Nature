@@ -113,3 +113,4 @@ Each member must add their signature below as a Markdown image and commit it the
 ![Signature of Ekambeer grewal](https://drive.google.com/uc?export=view&id=1SvCNZLBZsVoUarTm8vY-4jTY9AUcypJf)
 
 ![Signature of Indiana Britto](https://i.imgur.com/HmVfXOX.png)
+![Signature of Kadden Grant](https://drive.google.com/file/d/1NiHOUGROa8JizCCVhJqFl2x0LYxGQBvT/view?usp=sharing)
