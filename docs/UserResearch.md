@@ -70,3 +70,37 @@ Students generally want to have better structure of their time and management of
 - Add **customizable reminders** and **nudges** to help users build consistency and stay on track with their routines.
 - Offer optional **accountability features**, like **sharing progress with friends** or setting **group challenges**, to increase motivation.
 - **Gamify consistency** (e.g., points, levels, or milestones) to make sticking to routines more fun and satisfying
+
+---
+
+## What type of outdoor activities do you enjoy 
+
+### **Observation Statement**
+Most participants enjoy low-stress, nature-based activities such as hiking, visiting parks or beaches, and reading outdoors. These findings highlight that users tend to prefer peaceful, recreational experiences that allow them to unwind rather than highly strenuous or competitive activities.
+
+
+### **Supporting Data**
+- Hiking and visiting parks or beaches were the most common responses, mentioned in over 80% of entries.
+- Reading outdoors appeared in about 40% of responses, indicating a preference for quiet, reflective time outside.
+- Biking and running were also common (≈35%), showing that some users enjoy more active forms of outdoor relaxation.
+- A few participants mentioned sports, fishing, and rock climbing, suggesting that physical challenges still appeal to a smaller group.
+
+### **Team Action (if any)** 
+- Incorporate outdoor-inspired challenges or prompts within the app
+- Include customizable activity tracking for outdoor habits like walks, biking, or reading breaks.
+---
+
+## How often do you intentionally spend time outdoors to relax or improve your mental well-being?
+
+### **Observation Statement**
+Most participants spend time outdoors a few times a week, showing a consistent effort to use nature as a mental health tool. However, a smaller portion indicated they rarely or almost never go outside intentionally, suggesting room for improvement in daily outdoor engagement.
+
+### **Supporting Data**
+- “A few times a week” was the most common response (≈55% of participants).
+- “Daily” responses accounted for about 20%
+- “A few times a month” (≈15%) and “Rarely/Almost never” (≈10%) reveal that a subset struggles to maintain consistent outdoor time.
+
+
+### **Team Action (if any)** 
+- Add gentle reminders or streak-based goals to encourage users to go outside regularly.
+- Introduce reflection prompts that help users notice their mood before and after outdoor time.
