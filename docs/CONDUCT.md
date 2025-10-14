@@ -115,4 +115,4 @@ Each member must add their signature below as a Markdown image and commit it the
 ![Signature of Indiana Britto](https://i.imgur.com/HmVfXOX.png)
 ![Signature of Kadden Grant](https://drive.google.com/file/d/1NiHOUGROa8JizCCVhJqFl2x0LYxGQBvT/view?usp=sharing)
 
-![Signature of Andres Henao](https://drive.google.com/1r2Pfig0yXHW7bqhtYl8nS2Jwmy3DNwVt)
+![Signature of Andres Henao](https://drive.google.com/file/d/1r2Pfig0yXHW7bqhtYl8nS2Jwmy3DNwVt/view?usp=sharing)
