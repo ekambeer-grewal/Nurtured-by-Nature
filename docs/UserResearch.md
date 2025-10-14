@@ -36,3 +36,19 @@ This clear majority indicates a consistent trend toward **darker interfaces** am
 - Ensure **dark mode** is optimized for **readability** and **visual contrast**.  
 - Consider testing **different shades of dark backgrounds** to find the most comfortable and user-friendly balance.
 
+
+---
+## What Would Keep You Coming Back?
+
+### **Observation Statement**
+The Survey shows that most participants (60 percent of them) would enjoy an app that allowed them to track and reward them for their consistency, while also still keeping them calm.
+
+### **Supporting Data**
+- **14 respondents (≈60%)** voted for **"Feeling calmer right after using it"** and **"Rewards or badges for
+consistency"**
+
+This demonstrates that users want a low stress tracker that lightly encourages them for consistency, offering rewards in return.
+
+### **Team Action (if any)** 
+- Design a **progress tracker** for the app that when fufilled, the user **receives a reward**, visual feedback would probably be best.
+- create a **calm, serene environment** for the app, make sure it does not stress the user out, provides a relaxing shelter for user to escape to. 
