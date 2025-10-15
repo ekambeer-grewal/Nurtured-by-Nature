@@ -122,3 +122,39 @@ Most participants said a busy schedule and poor weather keep them from spending 
 - Provide weather-based suggestions and gentle reminders to help users make short outdoor breaks part of their routine.  
 
 ---
+
+## Outdoor Activity Frequency
+### **Observation Statement:**
+Most respondents spend time outdoors for relaxation or mental well-being several times a week, showing a general awareness of the importance of outdoor time, though some engage infrequently.
+
+### **Supporting Data:**
+Out of 23 responses:
+- “A few times a week” appeared 10 times (≈43%).
+- “Daily” appeared 4 times (≈17%).
+- “A few times a month” appeared 5 times (≈22%).
+- “Rarely” appeared 2 times (≈9%).
+- “Almost never” appeared 2 times (≈9%).
+  
+This suggests that the majority (over 60%) intentionally go outdoors at least a few times a week, but there remains a notable portion who do so infrequently.
+
+### **Team Action (if any):**
+Focus app design and content on encouraging consistent outdoor engagement by targeting those who rarely or never go outdoors — possibly through motivational reminders, outdoor challenges, or short activity ideas to make it easier to build the habit.
+
+---
+
+## Wellness App Usage Duration
+### **Observation Statement:**
+Most participants prefer short, manageable interactions with a wellness app, typically under five minutes per day.
+
+## **Supporting Data:**
+Out of 23 responses:
+- Under 30 seconds: 8 (35%)
+- 1–2 minutes: 6 (26%)
+- 3–5 minutes: 6 (26%)
+- Over 5 minutes: 1 (4%)
+  
+## **Team Action (if any):**
+- Design the app for quick, simple experiences like short tips or reminders.
+- We could also add text notifications so users get value without needing to open the app, matching their preference for minimal time use.
+
+---
