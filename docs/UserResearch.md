@@ -104,3 +104,21 @@ Most participants spend time outdoors a few times a week, showing a consistent e
 ### **Team Action (if any)** 
 - Add gentle reminders or streak-based goals to encourage users to go outside regularly.
 - Introduce reflection prompts that help users notice their mood before and after outdoor time.
+
+---
+
+## What usually stops you from spending more time outdoors?
+
+### **Observation Statement**
+Most participants said a busy schedule and poor weather keep them from spending time outdoors. Some also cited screen distractions, low motivation, or not knowing what to do outside, showing that time and environment are the biggest barriers.  
+
+### **Supporting Data**
+- **95%** mentioned *lack of time or busy schedule*  
+- **64%** mentioned *weather conditions*  
+- Around **25–30%** noted *screen distractions* or *low motivation*  
+
+### **Team Action (if any)**
+- Add quick, low-effort activity prompts for busy days or bad weather.  
+- Provide weather-based suggestions and gentle reminders to help users make short outdoor breaks part of their routine.  
+
+---
