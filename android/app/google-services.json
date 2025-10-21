@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "942080026785",
+    "project_id": "nurtured-by-nature",
+    "storage_bucket": "nurtured-by-nature.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942080026785:android:13ebf33afbb94c3f1368e0",
+        "android_client_info": {
+          "package_name": "com.mycompany.nurturedbynature"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDd5BFm6LjwGAG4VixNe0OndPhnPVi-Qio"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
