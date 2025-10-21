@@ -1,5 +1,0 @@
-[Ekambeer Grewal](https://docs.google.com/presentation/d/1-0p0uADoD4A_wh5m7Qs2xUI60gn9O3tebz446cTsDsw/edit?usp=sharing)
-[Andres Henao](https://docs.google.com/presentation/d/1-0p0uADoD4A_wh5m7Qs2xUI60gn9O3tebz446cTsDsw/edit?usp=sharing)
-[Indy Britto](https://docs.google.com/presentation/d/1-0p0uADoD4A_wh5m7Qs2xUI60gn9O3tebz446cTsDsw/edit?usp=sharing)
-[Kadden Grant](https://docs.google.com/presentation/d/1-0p0uADoD4A_wh5m7Qs2xUI60gn9O3tebz446cTsDsw/edit?usp=sharing)
-[Brandon Cordon](https://docs.google.com/presentation/d/1-0p0uADoD4A_wh5m7Qs2xUI60gn9O3tebz446cTsDsw/edit?usp=sharing)
