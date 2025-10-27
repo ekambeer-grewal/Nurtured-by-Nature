@@ -181,25 +181,25 @@ The problem impacts adoption and engagement—potential new users abandon the pr
 By streamlining both flows into a single screen, we aim to minimize drop-offs and speed up the user journey, improving overall satisfaction and conversion rates.
 
 ## Experiment:
-# Platform: Firebase A/B Testing
-# Audience:
+Platform: Firebase A/B Testing
+Audience:
 50% of new and returning users see the current version (two separate pages).
 50% see the new version (single page with tab switch).
-# Rationale: A 50/50 split provides an even comparison while maintaining sufficient data volume for statistical significance.
+Rationale: A 50/50 split provides an even comparison while maintaining sufficient data volume for statistical significance.
 Tracking Setup (Firebase Analytics):
-# Event: screen_view for “login_page” and “signup_page”
-# Event: tab_switch for users toggling between tabs in the new version
-# Event: account_created
-# Event: login_success
-# Event: drop_off (if user exits before completing form)
-# Event: Time metrics for “average time to complete login/signup”
+Event: screen_view for “login_page” and “signup_page”
+Event: tab_switch for users toggling between tabs in the new version
+Event: account_created
+Event: login_success
+Event: drop_off (if user exits before completing form)
+Event: Time metrics for “average time to complete login/signup”
 These events will measure task success and adoption, helping determine which variation performs better.
 
 ### Variations:
-## Variation A – Current Design (Control):
+Variation A – Current Design (Control):
 Separate pages for Login and Signup.
 Users must navigate between two distinct routes (e.g., /login and /signup).
-## Variation B – New Design (Experiment):
+Variation B – New Design (Experiment):
 Single page with tab-based navigation to toggle between Login and Signup forms.
 Both forms load instantly, no page refresh.
 Clear UI tabs labeled “Login” and “Sign Up” for seamless switching.
