@@ -16,3 +16,9 @@
 
 ---
 
+**Engagement – CTR for Golden Path**  
+- The Daily Task arrow on the Home (Golden) Page triggers a custom event `daily_task_open_button`.  
+- Optional parameter: `session_type = "daily_task"`.  
+- Measures how many users begin the main calming activity through their Daily Task.
+
+---
