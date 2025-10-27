@@ -184,11 +184,11 @@ Merging the login and signup screens into a single page with tab-based navigatio
 ---
 
 ### **Experiment Setup (Using Firebase)**
-**Audience:** 50% of new and returning users see the current version (two separate pages).
+- ** Audience: ** 50% of new and returning users see the current version (two separate pages).
 50% see the new version (single page with tab switch). 
-**Rationale:**  
+- ** Rationale: **  
 A 50/50 split provides an even comparison while maintaining sufficient data volume for statistical significance.
-**Tracking Setup (Firebase Analytics):**
+- ** Tracking Setup (Firebase Analytics): **
 Event: screen_view for “login_page” and “signup_page”
 Event: tab_switch for users toggling between tabs in the new version
 Event: account_created
@@ -202,10 +202,10 @@ These events will measure task success and adoption, helping determine which var
 
 ### **Variations**
 
-**Variation A : Current Design (Control) **  
+- **Variation A : Current Design (Control) **  
 - Separate pages for Login and Signup.
 - Users must navigate between two distinct routes (e.g., /login and /signup).
-**Variation B (Test):  New Design (Experiment)**  
+- ** Variation B (Test):  New Design (Experiment) **  
 - Single page with tab-based navigation to toggle between Login and Signup forms.
 - Both forms load instantly, no page refresh.
 - Clear UI tabs labeled “Login” and “Sign Up” for seamless switching.
