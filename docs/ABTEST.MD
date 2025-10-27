@@ -141,19 +141,6 @@ If we change the “Login” button to a **contrasting earth brown color** that 
 
 **Remote Config Parameter:** `login_color = green | brown`  
 
-**Tracked Events:**  
-- `login_button_click`  
-- `login_success`  
-- `login_fail`  
-- `screen_time_loginpage`  
-- `returning_login`  
-
-**Success Criteria:**  
-Variant B is successful if it achieves:  
-- ≥10% higher login success rate  
-- ≥5% lower average screen time  
-- No drop in post-login satisfaction  
-
 ---
 
 ### **Variations**
