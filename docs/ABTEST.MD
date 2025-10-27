@@ -38,7 +38,7 @@ Each section collapsible/expandable for clarity
 ----
 Brandon Cordon
 
-A/B Test Name: 5-Day Nature Challenge — Streak Feature Implementation
+##A/B Test Name: 5-Day Nature Challenge — Streak Feature Implementation
 
 User Story US6 — Additional Features
 
@@ -91,14 +91,14 @@ retention_day_1, retention_day_3, retention_day_5 — track return rates.
 Rationale:
 5-day streaks are short enough to be approachable but long enough to test habit behavior. A randomized 50/50 split allows us to see clear differences in engagement and retention between the two groups.
 
-## Variations:
+### Variations:
 
-### Variation A (Control):
+#### Variation A (Control):
 No streak or challenge functionality.
 Users interact with their to-do list and nature features as usual.
 No reminder notifications tied to streak behavior.
 
-### Variation B (Variant):
+#### Variation B (Variant):
 UI Elements:
 A banner on the home screen inviting users to join the “5-Day Nature Challenge.”
 A progress bar or streak counter (e.g., 🌿 Day 1/5 completed).
