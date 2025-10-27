@@ -156,37 +156,39 @@ If we change the “Login” button to a **contrasting earth brown color** that 
 - Same placement and size (color is the only change)  
 
 
+
+----
+**Ekambeer Grewal –**  
+**Login/Sign Up: Separate Pages vs. Tab Switch (1 Page Design)**  
+**US1, US2 – Account Creation and Login**
+
+**Happiness:**  User satisfaction and perceived ease of navigation (via post-task survey or feedback prompt).  
+**Engagement:** Number of successful logins and signups completed per session. 
+**Adoption:** Percentage of new users who successfully create an account after visiting the login screen.
+**Retention:** Number of returning users who log in again after initial signup.
+**Task Success:** Average time to complete login/signup process  
+
 ---
 
-Ekambeer Grewal -
-
-## A/B Test Name:
-Login/Sign Up: Separate Pages vs. Tab Switch (1 Page Design)
-
-US1, US2 – Account Creation and Login
-
-## Metrics (HEART Framework):
-Happiness: User satisfaction and perceived ease of navigation (via post-task survey or feedback prompt).
-Engagement: Number of successful logins and signups completed per session.
-Adoption: Percentage of new users who successfully create an account after visiting the login screen.
-Retention: Number of returning users who log in again after initial signup.
-Task Success: Average time to complete login/signup process
-
-## Hypothesis:
-Merging the login and signup screens into a single page with tab-based navigation will streamline the user experience by removing the need to switch between separate pages or wait for reloads. This smoother flow is expected to reduce page loading time, boost the number of successful logins and signups, and enhance both adoption and task completion rates.
-
-## What Problem Are We Trying to Solve?
+### **What problem are we trying to solve?**
 Currently, users must navigate between two separate pages—one for login and another for signup. This separation can create unnecessary friction, especially on mobile devices, where additional page loads may slow down the process or interrupt the user’s flow. We suspect that combining both actions into a single, streamlined interface could make the experience more intuitive and efficient.
 The problem impacts adoption and engagement—potential new users abandon the process before signing up, and returning users may take longer to log in.
 By streamlining both flows into a single screen, we aim to minimize drop-offs and speed up the user journey, improving overall satisfaction and conversion rates.
 
-## Experiment:
-Platform: Firebase A/B Testing
-Audience:
-50% of new and returning users see the current version (two separate pages).
-50% see the new version (single page with tab switch).
-Rationale: A 50/50 split provides an even comparison while maintaining sufficient data volume for statistical significance.
-Tracking Setup (Firebase Analytics):
+---
+
+### **Hypothesis**
+Merging the login and signup screens into a single page with tab-based navigation will streamline the user experience by removing the need to switch between separate pages or wait for reloads. This smoother flow is expected to reduce page loading time, boost the number of successful logins and signups, and enhance both adoption and task completion rates.
+
+
+---
+
+### **Experiment Setup (Using Firebase)**
+**Audience:** 50% of new and returning users see the current version (two separate pages).
+50% see the new version (single page with tab switch). 
+**Rationale:**  
+A 50/50 split provides an even comparison while maintaining sufficient data volume for statistical significance.
+**Tracking Setup (Firebase Analytics):**
 Event: screen_view for “login_page” and “signup_page”
 Event: tab_switch for users toggling between tabs in the new version
 Event: account_created
@@ -195,13 +197,16 @@ Event: drop_off (if user exits before completing form)
 Event: Time metrics for “average time to complete login/signup”
 These events will measure task success and adoption, helping determine which variation performs better.
 
-### Variations:
-Variation A – Current Design (Control):
-Separate pages for Login and Signup.
-Users must navigate between two distinct routes (e.g., /login and /signup).
-Variation B – New Design (Experiment):
-Single page with tab-based navigation to toggle between Login and Signup forms.
-Both forms load instantly, no page refresh.
-Clear UI tabs labeled “Login” and “Sign Up” for seamless switching.
 
 ---
+
+### **Variations**
+
+**Variation A : Current Design (Control) **  
+- Separate pages for Login and Signup.
+- Users must navigate between two distinct routes (e.g., /login and /signup).
+**Variation B (Test):  New Design (Experiment)**  
+- Single page with tab-based navigation to toggle between Login and Signup forms.
+- Both forms load instantly, no page refresh.
+- Clear UI tabs labeled “Login” and “Sign Up” for seamless switching.
+
