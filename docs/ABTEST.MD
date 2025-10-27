@@ -109,7 +109,7 @@ Push notifications or gentle reminders if the user hasn’t completed the challe
 Motivational message after each completed day.
 ----
 **Andres Henao –**  
-**Login CTA Color: Forest Green vs. Earth Brown**  
+**Login Color: Forest Green vs. Earth Brown**  
 **US2 – User Login & Authentication**
 
 **Happiness:** Post-login satisfaction score (via in-app prompt).  
