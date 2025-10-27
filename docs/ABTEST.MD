@@ -107,3 +107,64 @@ A small badge that unlocks at completion.
 Behavior:
 Push notifications or gentle reminders if the user hasn’t completed the challenge task for the day.
 Motivational message after each completed day.
+----
+**Andres Henao –**  
+**Login CTA Color: Forest Green vs. Earth Brown**  
+**US2 – User Login & Authentication**
+
+**Happiness:** Post-login satisfaction score (via in-app prompt).  
+**Engagement:** Time spent on the login screen.  
+**Adoption:** Percentage of users who successfully log in and reach the dashboard.  
+**Retention:** Percentage of users who return within 7 days after first login.  
+**Task Success:** Percentage of login attempts completed without error.  
+
+---
+
+### **What problem are we trying to solve?**
+Some users enter their credentials but fail to complete the login process. The current green “Login” button blends with the green background, making it less noticeable and potentially reducing click-through rates. This visual similarity may be causing users to overlook the CTA, resulting in slower interactions and lower completion rates.
+
+---
+
+### **Hypothesis**
+If we change the “Login” button to a **contrasting earth brown color** that stands out against the background, users will notice it more quickly and interact with it faster, leading to:  
+- Higher click-through and login completion rates  
+- Shorter time spent on the login screen  
+- Equal or improved user satisfaction  
+
+---
+
+### **Experiment Setup (Using Firebase)**
+**Audience:** 50% of new users (randomly assigned)  
+**Experiment Allocation:**  
+- **Group A (Control):** Current **Forest Green** button (`#2E7D32`), white text  
+- **Group B (Variant):** **Earth Brown** button (`#6D4C41`), white text, matching header accent  
+
+**Remote Config Parameter:** `login_color = green | brown`  
+
+**Tracked Events:**  
+- `login_button_click`  
+- `login_success`  
+- `login_fail`  
+- `screen_time_loginpage`  
+- `returning_login`  
+
+**Success Criteria:**  
+Variant B is successful if it achieves:  
+- ≥10% higher login success rate  
+- ≥5% lower average screen time  
+- No drop in post-login satisfaction  
+
+---
+
+### **Variations**
+
+**Variation A : Forest Green **  
+- Solid button color: forest green 
+- White “Login” text  
+- Positioned below “Forgot Password?” link  
+
+**Variation B (Test):  Brown**  
+- Solid button color: brown 
+- White “Login” text  
+- Same placement and size (color is the only change)  
+
