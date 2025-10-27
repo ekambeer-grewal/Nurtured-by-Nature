@@ -38,7 +38,7 @@ Each section collapsible/expandable for clarity
 ----
 Brandon Cordon
 
-##A/B Test Name: 5-Day Nature Challenge — Streak Feature Implementation
+## A/B Test Name: 5-Day Nature Challenge — Streak Feature Implementation
 
 User Story US6 — Additional Features
 
