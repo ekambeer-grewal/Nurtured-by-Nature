@@ -322,7 +322,7 @@ Motivational message after each completed day.
 ----
 **Andres Henao –**  
 **Login Color: Forest Green vs. Earth Brown**  
-**US2 – User Login & Authentication**
+**US3 – User Login & Authentication**
 
 **Happiness:** Post-login satisfaction score (via in-app prompt).  
 **Engagement:** Time spent on the login screen.  
