@@ -31,3 +31,6 @@
 - Tracks completion of daily nature activities.
 
 ---
+**App-Specific Metric – Explore CTR**  
+- The Explore Button logs a custom event `explore_button` when tapped.  
+- Tracks engagement with exploration features beyond the Golden Path.
