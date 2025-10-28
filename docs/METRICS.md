@@ -22,3 +22,12 @@
 - Measures how many users begin the main calming activity through their Daily Task.
 
 ---
+
+---
+**Task Success – Nature Task Completion Rate**  
+- Both completion checkmarks on the Daily Task cards log events:  
+  - `nature_task_complete_left`  
+  - `nature_task_complete_right`  
+- Tracks completion of daily nature activities.
+
+---
