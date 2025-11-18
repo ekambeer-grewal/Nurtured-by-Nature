@@ -213,6 +213,7 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                 child: Container(
                                   width: 200.0,
                                   child: TextFormField(
+                                    key: ValueKey('Email_7n2s'),
                                     controller: _model.emailTextController,
                                     focusNode: _model.emailFocusNode,
                                     onChanged: (_) => EasyDebounce.debounce(
@@ -365,6 +366,7 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                 child: Container(
                                   width: 200.0,
                                   child: TextFormField(
+                                    key: ValueKey('Password_08fk'),
                                     controller: _model.passwordTextController,
                                     focusNode: _model.passwordFocusNode,
                                     autofocus: false,
@@ -508,6 +510,7 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                               Container(
                                 width: 200.0,
                                 child: TextFormField(
+                                  key: ValueKey('ConfirmPassword_7q8x'),
                                   controller:
                                       _model.confirmPasswordTextController,
                                   focusNode: _model.confirmPasswordFocusNode,
@@ -646,6 +649,7 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 30.0, 0.0, 12.0),
                                 child: FFButtonWidget(
+                                  key: ValueKey('Signup_19b7'),
                                   onPressed: () async {
                                     logFirebaseEvent(
                                         'SIGN_UP_PAGE_PAGE_Signup_ON_TAP');

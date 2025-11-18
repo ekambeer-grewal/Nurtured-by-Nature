@@ -372,6 +372,7 @@ class _SplashPageWidgetState extends State<SplashPageWidget> {
                           ],
                         ),
                         child: FFButtonWidget(
+                          key: ValueKey('SignUp_9ar6'),
                           onPressed: () async {
                             logFirebaseEvent('SPLASH_PAGE_PAGE_SignUp_ON_TAP');
                             logFirebaseEvent('SignUp_navigate_to');

@@ -32,6 +32,40 @@ void main() async {
     await appState.initializePersistedState();
   });
 
+  testWidgets('splash page to signup page', (WidgetTester tester) async {
+    _overrideOnError();
+
+    await tester.pumpWidget(ChangeNotifierProvider(
+      create: (context) => FFAppState(),
+      child: const MyApp(),
+    ));
+    await GoogleFonts.pendingFonts();
+
+    await tester.pumpAndSettle(const Duration(milliseconds: 6000));
+    await tester.tap(find.byKey(const ValueKey('SignUp_9ar6')));
+    await tester.pumpAndSettle(const Duration(milliseconds: 5000));
+  });
+
+  testWidgets('account creation', (WidgetTester tester) async {
+    _overrideOnError();
+
+    await tester.pumpWidget(ChangeNotifierProvider(
+      create: (context) => FFAppState(),
+      child: const MyApp(),
+    ));
+    await GoogleFonts.pendingFonts();
+
+    await tester.pumpAndSettle(const Duration(milliseconds: 3000));
+    await tester.enterText(
+        find.byKey(const ValueKey('Email_7n2s')), 'dredre@gmail.com');
+    await tester.enterText(
+        find.byKey(const ValueKey('Password_08fk')), 'password123');
+    await tester.enterText(
+        find.byKey(const ValueKey('ConfirmPassword_7q8x')), 'password123');
+    await tester.tap(find.byKey(const ValueKey('Signup_19b7')));
+    expect(find.text('Name'), findsOneWidget);
+  });
+
   testWidgets('Profile Creation', (WidgetTester tester) async {
     _overrideOnError();
 
