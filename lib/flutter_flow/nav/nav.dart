@@ -70,20 +70,27 @@ class AppStateNotifier extends ChangeNotifier {
   }
 }
 
-GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
+GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
+    GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? GoldenPathWidget() : SplashPageWidget(),
+      errorBuilder: (context, state) => appStateNotifier.loggedIn
+          ? entryPage ?? GoldenPageWidget()
+          : SplashPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
-              ? GoldenPathWidget()
+              ? entryPage ?? GoldenPageWidget()
               : SplashPageWidget(),
+        ),
+        FFRoute(
+          name: OnboardingWidget.routeName,
+          path: OnboardingWidget.routePath,
+          builder: (context, params) => OnboardingWidget(),
         ),
         FFRoute(
           name: SplashPageWidget.routeName,
@@ -91,19 +98,24 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => SplashPageWidget(),
         ),
         FFRoute(
-          name: SignUpPageWidget.routeName,
-          path: SignUpPageWidget.routePath,
-          builder: (context, params) => SignUpPageWidget(),
-        ),
-        FFRoute(
           name: LoginpageWidget.routeName,
           path: LoginpageWidget.routePath,
           builder: (context, params) => LoginpageWidget(),
         ),
         FFRoute(
-          name: GoldenPathWidget.routeName,
-          path: GoldenPathWidget.routePath,
-          builder: (context, params) => GoldenPathWidget(),
+          name: SignUpPageWidget.routeName,
+          path: SignUpPageWidget.routePath,
+          builder: (context, params) => SignUpPageWidget(),
+        ),
+        FFRoute(
+          name: GoldenPageWidget.routeName,
+          path: GoldenPageWidget.routePath,
+          builder: (context, params) => GoldenPageWidget(),
+        ),
+        FFRoute(
+          name: WeeklyTasksWidget.routeName,
+          path: WeeklyTasksWidget.routePath,
+          builder: (context, params) => WeeklyTasksWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

@@ -1,4 +1,4 @@
-package com.mycompany.nurturedbynature
+package com.uricsc305.nurturedbynature
 
 import io.flutter.embedding.android.FlutterActivity
 
