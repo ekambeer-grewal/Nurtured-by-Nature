@@ -36,10 +36,6 @@ class SignUpPageModel extends FlutterFlowModel<SignUpPageWidget> {
   late bool confirmPasswordVisibility;
   String? Function(BuildContext, String?)?
       confirmPasswordTextControllerValidator;
-  // Stores action output result for [Firestore Query - Query a collection] action in Signup widget.
-  List<TasksRecord>? taskList;
-  // Stores action output result for [Backend Call - Create Document] action in Signup widget.
-  UserTasksRecord? userTaskList;
   // Stores action output result for [Firestore Query - Query a collection] action in IconButton widget.
   List<TasksRecord>? taskListGoogle;
   // Stores action output result for [Backend Call - Create Document] action in IconButton widget.

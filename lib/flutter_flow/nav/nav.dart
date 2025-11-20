@@ -88,24 +88,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
               : SplashPageWidget(),
         ),
         FFRoute(
-          name: OnboardingWidget.routeName,
-          path: OnboardingWidget.routePath,
-          builder: (context, params) => OnboardingWidget(),
-        ),
-        FFRoute(
           name: SplashPageWidget.routeName,
           path: SplashPageWidget.routePath,
           builder: (context, params) => SplashPageWidget(),
-        ),
-        FFRoute(
-          name: LoginpageWidget.routeName,
-          path: LoginpageWidget.routePath,
-          builder: (context, params) => LoginpageWidget(),
-        ),
-        FFRoute(
-          name: SignUpPageWidget.routeName,
-          path: SignUpPageWidget.routePath,
-          builder: (context, params) => SignUpPageWidget(),
         ),
         FFRoute(
           name: GoldenPageWidget.routeName,
@@ -116,6 +101,21 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
           name: WeeklyTasksWidget.routeName,
           path: WeeklyTasksWidget.routePath,
           builder: (context, params) => WeeklyTasksWidget(),
+        ),
+        FFRoute(
+          name: OnboardingWidget.routeName,
+          path: OnboardingWidget.routePath,
+          builder: (context, params) => OnboardingWidget(),
+        ),
+        FFRoute(
+          name: LoginpageWidget.routeName,
+          path: LoginpageWidget.routePath,
+          builder: (context, params) => LoginpageWidget(),
+        ),
+        FFRoute(
+          name: SignUpPageWidget.routeName,
+          path: SignUpPageWidget.routePath,
+          builder: (context, params) => SignUpPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

@@ -44,6 +44,10 @@ class FFAppState extends ChangeNotifier {
     _safeInit(() {
       _TaskRef3 = prefs.getString('ff_TaskRef3')?.ref ?? _TaskRef3;
     });
+    _safeInit(() {
+      _cityWeatherCondition =
+          prefs.getString('ff_cityWeatherCondition') ?? _cityWeatherCondition;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -120,6 +124,14 @@ class FFAppState extends ChangeNotifier {
     value != null
         ? prefs.setString('ff_TaskRef3', value.path)
         : prefs.remove('ff_TaskRef3');
+  }
+
+  /// City's weather condition to find what task we assigning to user
+  String _cityWeatherCondition = '';
+  String get cityWeatherCondition => _cityWeatherCondition;
+  set cityWeatherCondition(String value) {
+    _cityWeatherCondition = value;
+    prefs.setString('ff_cityWeatherCondition', value);
   }
 }
 

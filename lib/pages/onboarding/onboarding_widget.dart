@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -6,10 +7,14 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
+import '/flutter_flow/random_data_util.dart' as random_data;
 import '/index.dart';
+import 'package:collection/collection.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'onboarding_model.dart';
 export 'onboarding_model.dart';
 
@@ -52,6 +57,8 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -299,17 +306,168 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                   ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 12.0, 0.0, 12.0),
+                          Form(
+                            key: _model.formKey2,
+                            autovalidateMode: AutovalidateMode.disabled,
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 12.0, 0.0, 12.0),
+                              child: Container(
+                                width: 200.0,
+                                child: TextFormField(
+                                  key: ValueKey('Name_0sqg'),
+                                  controller: _model.nameTextController,
+                                  focusNode: _model.nameFocusNode,
+                                  onChanged: (_) => EasyDebounce.debounce(
+                                    '_model.nameTextController',
+                                    Duration(milliseconds: 2000),
+                                    () => safeSetState(() {}),
+                                  ),
+                                  autofocus: false,
+                                  enabled: true,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    labelText: 'Name',
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          font: GoogleFonts.inter(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontStyle,
+                                          ),
+                                          color: Color(0xFF3A7349),
+                                          letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .fontStyle,
+                                        ),
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          font: GoogleFonts.inter(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontStyle,
+                                          ),
+                                          color: Color(0xFF3A7349),
+                                          letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .fontStyle,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.black,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    filled: true,
+                                    fillColor: Color(0xFFBEAA7D),
+                                    suffixIcon: _model
+                                            .nameTextController!.text.isNotEmpty
+                                        ? InkWell(
+                                            onTap: () async {
+                                              _model.nameTextController
+                                                  ?.clear();
+                                              safeSetState(() {});
+                                            },
+                                            child: Icon(
+                                              Icons.clear,
+                                              color: Color(0xFF3A7349),
+                                              size: 22,
+                                            ),
+                                          )
+                                        : null,
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        font: GoogleFonts.istokWeb(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                        color: Color(0xFF14181B),
+                                        letterSpacing: 0.0,
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                  keyboardType: TextInputType.name,
+                                  cursorColor:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  enableInteractiveSelection: true,
+                                  validator: _model.nameTextControllerValidator
+                                      .asValidator(context),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Form(
+                            key: _model.formKey1,
+                            autovalidateMode: AutovalidateMode.disabled,
                             child: Container(
                               width: 200.0,
                               child: TextFormField(
-                                key: ValueKey('Name_0sqg'),
-                                controller: _model.nameTextController,
-                                focusNode: _model.nameFocusNode,
+                                key: ValueKey('City_vyce'),
+                                controller: _model.cityTextController,
+                                focusNode: _model.cityFocusNode,
                                 onChanged: (_) => EasyDebounce.debounce(
-                                  '_model.nameTextController',
+                                  '_model.cityTextController',
                                   Duration(milliseconds: 2000),
                                   () => safeSetState(() {}),
                                 ),
@@ -318,7 +476,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   isDense: true,
-                                  labelText: 'Name',
+                                  labelText: 'City',
                                   labelStyle: FlutterFlowTheme.of(context)
                                       .labelMedium
                                       .override(
@@ -394,10 +552,10 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                   filled: true,
                                   fillColor: Color(0xFFBEAA7D),
                                   suffixIcon: _model
-                                          .nameTextController!.text.isNotEmpty
+                                          .cityTextController!.text.isNotEmpty
                                       ? InkWell(
                                           onTap: () async {
-                                            _model.nameTextController?.clear();
+                                            _model.cityTextController?.clear();
                                             safeSetState(() {});
                                           },
                                           child: Icon(
@@ -428,141 +586,11 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                           .bodyMedium
                                           .fontStyle,
                                     ),
-                                keyboardType: TextInputType.name,
-                                cursorColor:
-                                    FlutterFlowTheme.of(context).primaryText,
+                                cursorColor: Color(0xFF14181B),
                                 enableInteractiveSelection: true,
-                                validator: _model.nameTextControllerValidator
+                                validator: _model.cityTextControllerValidator
                                     .asValidator(context),
                               ),
-                            ),
-                          ),
-                          Container(
-                            width: 200.0,
-                            child: TextFormField(
-                              key: ValueKey('City_vyce'),
-                              controller: _model.cityTextController,
-                              focusNode: _model.cityFocusNode,
-                              onChanged: (_) => EasyDebounce.debounce(
-                                '_model.cityTextController',
-                                Duration(milliseconds: 2000),
-                                () => safeSetState(() {}),
-                              ),
-                              autofocus: false,
-                              enabled: true,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                isDense: true,
-                                labelText: 'City',
-                                labelStyle: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .override(
-                                      font: GoogleFonts.inter(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontStyle,
-                                      ),
-                                      color: Color(0xFF3A7349),
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
-                                    ),
-                                hintStyle: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .override(
-                                      font: GoogleFonts.inter(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontStyle,
-                                      ),
-                                      color: Color(0xFF3A7349),
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
-                                    ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).error,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).error,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                filled: true,
-                                fillColor: Color(0xFFBEAA7D),
-                                suffixIcon: _model
-                                        .cityTextController!.text.isNotEmpty
-                                    ? InkWell(
-                                        onTap: () async {
-                                          _model.cityTextController?.clear();
-                                          safeSetState(() {});
-                                        },
-                                        child: Icon(
-                                          Icons.clear,
-                                          color: Color(0xFF3A7349),
-                                          size: 22,
-                                        ),
-                                      )
-                                    : null,
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    font: GoogleFonts.istokWeb(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
-                              cursorColor:
-                                  FlutterFlowTheme.of(context).primaryText,
-                              enableInteractiveSelection: true,
-                              validator: _model.cityTextControllerValidator
-                                  .asValidator(context),
                             ),
                           ),
                           Padding(
@@ -580,9 +608,173 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                   displayName: _model.nameTextController.text,
                                   city: _model.cityTextController.text,
                                 ));
+                                logFirebaseEvent('CreateAcc_firestore_query');
+                                _model.taskList = await queryTasksRecordOnce(
+                                  limit: 7,
+                                );
+                                // RandomIndex1
+                                logFirebaseEvent('CreateAcc_RandomIndex1');
+                                _model.randomInt1 =
+                                    random_data.randomInteger(0, 6);
+                                safeSetState(() {});
+                                // RandomIndex2
+                                logFirebaseEvent('CreateAcc_RandomIndex2');
+                                _model.randomInt2 =
+                                    random_data.randomInteger(0, 6);
+                                safeSetState(() {});
+                                // RandomIndex3
+                                logFirebaseEvent('CreateAcc_RandomIndex3');
+                                _model.randomInt3 =
+                                    random_data.randomInteger(0, 6);
+                                safeSetState(() {});
+                                while ((_model.randomInt1 ==
+                                        _model.randomInt2) ||
+                                    (_model.randomInt3 == _model.randomInt2)) {
+                                  // RandomIndex2
+                                  logFirebaseEvent('CreateAcc_RandomIndex2');
+                                  _model.randomInt2 =
+                                      random_data.randomInteger(0, 6);
+                                  safeSetState(() {});
+                                }
+                                while ((_model.randomInt1 ==
+                                        _model.randomInt3) ||
+                                    (_model.randomInt2 == _model.randomInt3)) {
+                                  // RandomIndex3
+                                  logFirebaseEvent('CreateAcc_RandomIndex3');
+                                  _model.randomInt3 =
+                                      random_data.randomInteger(0, 10);
+                                  safeSetState(() {});
+                                }
+                                logFirebaseEvent('CreateAcc_backend_call');
+                                _model.cityWeather =
+                                    await SeverWeatherTaskCall.call(
+                                  cityName: valueOrDefault(
+                                      currentUserDocument?.city, ''),
+                                );
+
+                                if ((_model.cityWeather?.succeeded ?? true)) {
+                                  logFirebaseEvent(
+                                      'CreateAcc_update_app_state');
+                                  FFAppState().cityWeatherCondition =
+                                      SeverWeatherTaskCall.condition(
+                                    (_model.cityWeather?.jsonBody ?? ''),
+                                  )!;
+                                  safeSetState(() {});
+                                } else {
+                                  logFirebaseEvent('CreateAcc_show_snack_bar');
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Error No Value for condition for this city',
+                                        style: TextStyle(
+                                          color: Color(0xFFF2260A),
+                                        ),
+                                      ),
+                                      duration: Duration(milliseconds: 4650),
+                                      backgroundColor: Color(0xFFF9D3D3),
+                                    ),
+                                  );
+                                }
+
+                                if (functions.isNotRain(
+                                    FFAppState().cityWeatherCondition)!) {
+                                  logFirebaseEvent(
+                                      'CreateAcc_update_page_state');
+                                  _model.textTask1 = _model.taskList!
+                                      .elementAtOrNull(_model.randomInt1)!
+                                      .text;
+                                  _model.textTask2 = _model.taskList!
+                                      .elementAtOrNull(_model.randomInt2)!
+                                      .text;
+                                  _model.textTask3 = _model.taskList!
+                                      .elementAtOrNull(_model.randomInt3)!
+                                      .text;
+                                  safeSetState(() {});
+                                  logFirebaseEvent('CreateAcc_backend_call');
+
+                                  await currentUserReference!
+                                      .update(createUsersRecordData(
+                                    isWeatherSever: false,
+                                  ));
+                                } else {
+                                  logFirebaseEvent('CreateAcc_firestore_query');
+                                  _model.severWeatherTaskList =
+                                      await querySeverConditionTaskRecordOnce(
+                                    limit: 7,
+                                  );
+                                  logFirebaseEvent(
+                                      'CreateAcc_update_page_state');
+                                  _model.textTask1 = _model
+                                      .severWeatherTaskList!
+                                      .elementAtOrNull(_model.randomInt1)!
+                                      .task;
+                                  _model.textTask2 = _model
+                                      .severWeatherTaskList!
+                                      .elementAtOrNull(_model.randomInt2)!
+                                      .task;
+                                  _model.textTask3 = _model
+                                      .severWeatherTaskList!
+                                      .elementAtOrNull(_model.randomInt3)!
+                                      .task;
+                                  safeSetState(() {});
+                                  logFirebaseEvent('CreateAcc_backend_call');
+
+                                  await currentUserReference!
+                                      .update(createUsersRecordData(
+                                    isWeatherSever: true,
+                                  ));
+                                }
+
+                                logFirebaseEvent('CreateAcc_backend_call');
+
+                                var userTasksRecordReference =
+                                    UserTasksRecord.createDoc(
+                                        currentUserReference!);
+                                await userTasksRecordReference
+                                    .set(createUserTasksRecordData(
+                                  task1: _model.textTask1,
+                                  isComplete1: false,
+                                  task2: _model.textTask2,
+                                  task3: _model.textTask3,
+                                  isComplete2: false,
+                                  isComplete3: false,
+                                ));
+                                _model.userTaskList =
+                                    UserTasksRecord.getDocumentFromData(
+                                        createUserTasksRecordData(
+                                          task1: _model.textTask1,
+                                          isComplete1: false,
+                                          task2: _model.textTask2,
+                                          task3: _model.textTask3,
+                                          isComplete2: false,
+                                          isComplete3: false,
+                                        ),
+                                        userTasksRecordReference);
+                                logFirebaseEvent('CreateAcc_update_app_state');
+                                FFAppState().TaskText1 =
+                                    _model.userTaskList!.task1;
+                                FFAppState().IsComplete1 =
+                                    _model.userTaskList!.isComplete1;
+                                FFAppState().TaskText2 =
+                                    _model.userTaskList!.task2;
+                                FFAppState().Iscomplete2 =
+                                    _model.userTaskList!.isComplete2;
+                                FFAppState().TaskText3 =
+                                    _model.userTaskList!.task3;
+                                FFAppState().IsComplete3 =
+                                    _model.userTaskList!.isComplete3;
+                                FFAppState().TaskRef1 =
+                                    _model.userTaskList?.reference;
+                                FFAppState().TaskRef2 =
+                                    _model.userTaskList?.reference;
+                                FFAppState().TaskRef3 =
+                                    _model.userTaskList?.reference;
+                                safeSetState(() {});
                                 logFirebaseEvent('CreateAcc_navigate_to');
 
                                 context.goNamed(GoldenPageWidget.routeName);
+
+                                safeSetState(() {});
                               },
                               text: 'Create Account',
                               options: FFButtonOptions(

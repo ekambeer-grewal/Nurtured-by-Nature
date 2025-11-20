@@ -45,6 +45,11 @@ class UserTasksRecord extends FirestoreRecord {
   bool get isComplete3 => _isComplete3 ?? false;
   bool hasIsComplete3() => _isComplete3 != null;
 
+  // "dateCreated" field.
+  DateTime? _dateCreated;
+  DateTime? get dateCreated => _dateCreated;
+  bool hasDateCreated() => _dateCreated != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
@@ -54,6 +59,7 @@ class UserTasksRecord extends FirestoreRecord {
     _isComplete1 = snapshotData['isComplete1'] as bool?;
     _isComplete2 = snapshotData['isComplete2'] as bool?;
     _isComplete3 = snapshotData['isComplete3'] as bool?;
+    _dateCreated = snapshotData['dateCreated'] as DateTime?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -102,6 +108,7 @@ Map<String, dynamic> createUserTasksRecordData({
   bool? isComplete1,
   bool? isComplete2,
   bool? isComplete3,
+  DateTime? dateCreated,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -111,6 +118,7 @@ Map<String, dynamic> createUserTasksRecordData({
       'isComplete1': isComplete1,
       'isComplete2': isComplete2,
       'isComplete3': isComplete3,
+      'dateCreated': dateCreated,
     }.withoutNulls,
   );
 
@@ -127,7 +135,8 @@ class UserTasksRecordDocumentEquality implements Equality<UserTasksRecord> {
         e1?.task3 == e2?.task3 &&
         e1?.isComplete1 == e2?.isComplete1 &&
         e1?.isComplete2 == e2?.isComplete2 &&
-        e1?.isComplete3 == e2?.isComplete3;
+        e1?.isComplete3 == e2?.isComplete3 &&
+        e1?.dateCreated == e2?.dateCreated;
   }
 
   @override
@@ -137,7 +146,8 @@ class UserTasksRecordDocumentEquality implements Equality<UserTasksRecord> {
         e?.task3,
         e?.isComplete1,
         e?.isComplete2,
-        e?.isComplete3
+        e?.isComplete3,
+        e?.dateCreated
       ]);
 
   @override
