@@ -109,6 +109,7 @@ void main() async {
     ));
     await GoogleFonts.pendingFonts();
 
+    await tester.tap(find.text('Login'));
     await tester.enterText(find.text('Email'), 'Kaddeng52@uri.edu');
     await tester.tap(find.text('Forgot Password ?'));
     await tester.pumpAndSettle(const Duration(milliseconds: 3000));

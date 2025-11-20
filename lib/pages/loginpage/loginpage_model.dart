@@ -37,8 +37,18 @@ class LoginpageModel extends FlutterFlowModel<LoginpageWidget> {
   UserTasksRecord? userTaskSeverList;
   // Stores action output result for [Firestore Query - Query a collection] action in Login widget.
   UserTasksRecord? userTaskList2;
+  // Stores action output result for [Backend Call - API (SeverWeatherTask)] action in IconButton widget.
+  ApiCallResponse? apiResultGoogle;
+  // Stores action output result for [Firestore Query - Query a collection] action in IconButton widget.
+  List<TasksRecord>? taskListgoogle;
   // Stores action output result for [Firestore Query - Query a collection] action in IconButton widget.
   UserTasksRecord? userTaskListGoogle;
+  // Stores action output result for [Firestore Query - Query a collection] action in IconButton widget.
+  List<SeverConditionTaskRecord>? taskListSevergoogle;
+  // Stores action output result for [Firestore Query - Query a collection] action in IconButton widget.
+  UserTasksRecord? userTaskSeverListGoogle;
+  // Stores action output result for [Firestore Query - Query a collection] action in IconButton widget.
+  UserTasksRecord? userTaskListgoogle2;
 
   @override
   void initState(BuildContext context) {

@@ -1,4 +1,3 @@
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'sign_up_page_widget.dart' show SignUpPageWidget;
@@ -36,10 +35,6 @@ class SignUpPageModel extends FlutterFlowModel<SignUpPageWidget> {
   late bool confirmPasswordVisibility;
   String? Function(BuildContext, String?)?
       confirmPasswordTextControllerValidator;
-  // Stores action output result for [Firestore Query - Query a collection] action in IconButton widget.
-  List<TasksRecord>? taskListGoogle;
-  // Stores action output result for [Backend Call - Create Document] action in IconButton widget.
-  UserTasksRecord? userTaskListGoogle;
 
   @override
   void initState(BuildContext context) {

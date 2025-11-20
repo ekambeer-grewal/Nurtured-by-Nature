@@ -956,34 +956,384 @@ class _LoginpageWidgetState extends State<LoginpageWidget> {
                                         },
                                       ),
                                     });
+                                    logFirebaseEvent('IconButton_backend_call');
+                                    _model.apiResultGoogle =
+                                        await SeverWeatherTaskCall.call(
+                                      cityName: valueOrDefault(
+                                          currentUserDocument?.city, ''),
+                                    );
+
                                     logFirebaseEvent(
-                                        'IconButton_firestore_query');
-                                    _model.userTaskListGoogle =
-                                        await queryUserTasksRecordOnce(
-                                      parent: currentUserReference,
-                                      singleRecord: true,
-                                    ).then((s) => s.firstOrNull);
-                                    logFirebaseEvent(
-                                        'IconButton_update_app_state');
-                                    FFAppState().TaskText1 =
-                                        _model.userTaskListGoogle!.task1;
-                                    FFAppState().IsComplete1 =
-                                        _model.userTaskListGoogle!.isComplete1;
-                                    FFAppState().TaskText2 =
-                                        _model.userTaskListGoogle!.task2;
-                                    FFAppState().Iscomplete2 =
-                                        _model.userTaskListGoogle!.isComplete2;
-                                    FFAppState().TaskText3 =
-                                        _model.userTaskListGoogle!.task3;
-                                    FFAppState().IsComplete3 =
-                                        _model.userTaskListGoogle!.isComplete3;
-                                    FFAppState().TaskRef1 =
-                                        _model.userTaskListGoogle?.reference;
-                                    FFAppState().TaskRef2 =
-                                        _model.userTaskListGoogle?.reference;
-                                    FFAppState().TaskRef3 =
-                                        _model.userTaskListGoogle?.reference;
-                                    safeSetState(() {});
+                                        'IconButton_show_snack_bar');
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'here',
+                                          style: TextStyle(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                          ),
+                                        ),
+                                        duration: Duration(milliseconds: 4000),
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .secondary,
+                                      ),
+                                    );
+                                    if ((_model.apiResultGoogle?.succeeded ??
+                                        true)) {
+                                      logFirebaseEvent(
+                                          'IconButton_show_snack_bar');
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'app',
+                                            style: TextStyle(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                            ),
+                                          ),
+                                          duration:
+                                              Duration(milliseconds: 4000),
+                                          backgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondary,
+                                        ),
+                                      );
+                                      logFirebaseEvent(
+                                          'IconButton_update_app_state');
+                                      FFAppState().cityWeatherCondition =
+                                          SeverWeatherTaskCall.condition(
+                                        (_model.apiResult?.jsonBody ?? ''),
+                                      )!;
+                                      safeSetState(() {});
+                                      if (valueOrDefault<bool>(
+                                              currentUserDocument
+                                                  ?.isWeatherSever,
+                                              false) &&
+                                          functions.isNotRain(FFAppState()
+                                              .cityWeatherCondition)!) {
+                                        logFirebaseEvent(
+                                            'IconButton_show_snack_bar');
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'if',
+                                              style: TextStyle(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                              ),
+                                            ),
+                                            duration:
+                                                Duration(milliseconds: 4000),
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondary,
+                                          ),
+                                        );
+                                        logFirebaseEvent(
+                                            'IconButton_firestore_query');
+                                        _model.taskListgoogle =
+                                            await queryTasksRecordOnce();
+                                        // RandomIndex1
+                                        logFirebaseEvent(
+                                            'IconButton_RandomIndex1');
+                                        _model.randomInt1 =
+                                            random_data.randomInteger(0, 6);
+                                        safeSetState(() {});
+                                        // RandomIndex2
+                                        logFirebaseEvent(
+                                            'IconButton_RandomIndex2');
+                                        _model.randomInt2 =
+                                            random_data.randomInteger(0, 6);
+                                        safeSetState(() {});
+                                        // RandomIndex3
+                                        logFirebaseEvent(
+                                            'IconButton_RandomIndex3');
+                                        _model.randomInt3 =
+                                            random_data.randomInteger(0, 6);
+                                        safeSetState(() {});
+                                        while ((_model.randomInt1 ==
+                                                _model.randomInt2) ||
+                                            (_model.randomInt3 ==
+                                                _model.randomInt2)) {
+                                          // RandomIndex2
+                                          logFirebaseEvent(
+                                              'IconButton_RandomIndex2');
+                                          _model.randomInt2 = null;
+                                          safeSetState(() {});
+                                        }
+                                        while ((_model.randomInt1 ==
+                                                _model.randomInt3) ||
+                                            (_model.randomInt2 ==
+                                                _model.randomInt3)) {
+                                          // RandomIndex3
+                                          logFirebaseEvent(
+                                              'IconButton_RandomIndex3');
+                                          _model.randomInt3 = null;
+                                          safeSetState(() {});
+                                        }
+                                        logFirebaseEvent(
+                                            'IconButton_firestore_query');
+                                        _model.userTaskListGoogle =
+                                            await queryUserTasksRecordOnce(
+                                          parent: currentUserReference,
+                                          singleRecord: true,
+                                        ).then((s) => s.firstOrNull);
+                                        logFirebaseEvent(
+                                            'IconButton_backend_call');
+
+                                        await _model.userTaskList!.reference
+                                            .update(createUserTasksRecordData(
+                                          task1: _model.taskList
+                                              ?.elementAtOrNull(
+                                                  _model.randomInt1!)
+                                              ?.text,
+                                          task2: _model.taskListgoogle
+                                              ?.elementAtOrNull(
+                                                  _model.randomInt2!)
+                                              ?.text,
+                                          task3: _model.taskListgoogle
+                                              ?.elementAtOrNull(
+                                                  _model.randomInt3!)
+                                              ?.text,
+                                          isComplete1: false,
+                                          isComplete2: false,
+                                          isComplete3: false,
+                                        ));
+                                        logFirebaseEvent(
+                                            'IconButton_update_app_state');
+                                        FFAppState().TaskText1 =
+                                            _model.userTaskListGoogle!.task1;
+                                        FFAppState().IsComplete1 = _model
+                                            .userTaskListGoogle!.isComplete1;
+                                        FFAppState().TaskText2 =
+                                            _model.userTaskListGoogle!.task2;
+                                        FFAppState().Iscomplete2 = _model
+                                            .userTaskListGoogle!.isComplete2;
+                                        FFAppState().TaskText3 =
+                                            _model.userTaskListGoogle!.task3;
+                                        FFAppState().IsComplete3 = _model
+                                            .userTaskListGoogle!.isComplete3;
+                                        FFAppState().TaskRef1 = _model
+                                            .userTaskListGoogle?.reference;
+                                        FFAppState().TaskRef2 = _model
+                                            .userTaskListGoogle?.reference;
+                                        FFAppState().TaskRef3 = _model
+                                            .userTaskListGoogle?.reference;
+                                        safeSetState(() {});
+                                        logFirebaseEvent(
+                                            'IconButton_backend_call');
+
+                                        await currentUserReference!
+                                            .update(createUsersRecordData(
+                                          isWeatherSever: false,
+                                        ));
+                                      } else if (!functions.isNotRain(
+                                              FFAppState()
+                                                  .cityWeatherCondition)! &&
+                                          !valueOrDefault<bool>(
+                                              currentUserDocument
+                                                  ?.isWeatherSever,
+                                              false)) {
+                                        logFirebaseEvent(
+                                            'IconButton_show_snack_bar');
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'ifelse',
+                                              style: TextStyle(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                              ),
+                                            ),
+                                            duration:
+                                                Duration(milliseconds: 4000),
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondary,
+                                          ),
+                                        );
+                                        logFirebaseEvent(
+                                            'IconButton_firestore_query');
+                                        _model.taskListSevergoogle =
+                                            await querySeverConditionTaskRecordOnce(
+                                          limit: 7,
+                                        );
+                                        // RandomIndex1
+                                        logFirebaseEvent(
+                                            'IconButton_RandomIndex1');
+                                        _model.randomInt1 =
+                                            random_data.randomInteger(0, 6);
+                                        safeSetState(() {});
+                                        // RandomIndex2
+                                        logFirebaseEvent(
+                                            'IconButton_RandomIndex2');
+                                        _model.randomInt2 =
+                                            random_data.randomInteger(0, 6);
+                                        safeSetState(() {});
+                                        // RandomIndex3
+                                        logFirebaseEvent(
+                                            'IconButton_RandomIndex3');
+                                        _model.randomInt3 =
+                                            random_data.randomInteger(0, 6);
+                                        safeSetState(() {});
+                                        while ((_model.randomInt1 ==
+                                                _model.randomInt2) ||
+                                            (_model.randomInt3 ==
+                                                _model.randomInt2)) {
+                                          // RandomIndex2
+                                          logFirebaseEvent(
+                                              'IconButton_RandomIndex2');
+                                          _model.randomInt2 = null;
+                                          safeSetState(() {});
+                                        }
+                                        while ((_model.randomInt1 ==
+                                                _model.randomInt3) ||
+                                            (_model.randomInt2 ==
+                                                _model.randomInt3)) {
+                                          // RandomIndex3
+                                          logFirebaseEvent(
+                                              'IconButton_RandomIndex3');
+                                          _model.randomInt3 = null;
+                                          safeSetState(() {});
+                                        }
+                                        logFirebaseEvent(
+                                            'IconButton_firestore_query');
+                                        _model.userTaskSeverListGoogle =
+                                            await queryUserTasksRecordOnce(
+                                          parent: currentUserReference,
+                                          singleRecord: true,
+                                        ).then((s) => s.firstOrNull);
+                                        logFirebaseEvent(
+                                            'IconButton_backend_call');
+
+                                        await _model
+                                            .userTaskSeverList!.reference
+                                            .update(createUserTasksRecordData(
+                                          task1: _model.taskListSever
+                                              ?.elementAtOrNull(
+                                                  _model.randomInt1!)
+                                              ?.task,
+                                          task2: _model.taskListSevergoogle
+                                              ?.elementAtOrNull(
+                                                  _model.randomInt2!)
+                                              ?.task,
+                                          task3: _model.taskListSevergoogle
+                                              ?.elementAtOrNull(
+                                                  _model.randomInt3!)
+                                              ?.task,
+                                          isComplete1: false,
+                                          isComplete2: false,
+                                          isComplete3: false,
+                                        ));
+                                        logFirebaseEvent(
+                                            'IconButton_update_app_state');
+                                        FFAppState().TaskText1 = _model
+                                            .userTaskSeverListGoogle!.task1;
+                                        FFAppState().IsComplete1 = _model
+                                            .userTaskSeverListGoogle!
+                                            .isComplete1;
+                                        FFAppState().TaskText2 = _model
+                                            .userTaskSeverListGoogle!.task2;
+                                        FFAppState().Iscomplete2 = _model
+                                            .userTaskSeverListGoogle!
+                                            .isComplete2;
+                                        FFAppState().TaskText3 = _model
+                                            .userTaskSeverListGoogle!.task3;
+                                        FFAppState().IsComplete3 = _model
+                                            .userTaskSeverListGoogle!
+                                            .isComplete3;
+                                        FFAppState().TaskRef1 =
+                                            _model.userTaskSeverList?.reference;
+                                        FFAppState().TaskRef2 = _model
+                                            .userTaskSeverListGoogle?.reference;
+                                        FFAppState().TaskRef3 = _model
+                                            .userTaskSeverListGoogle?.reference;
+                                        safeSetState(() {});
+                                        logFirebaseEvent(
+                                            'IconButton_backend_call');
+
+                                        await currentUserReference!
+                                            .update(createUsersRecordData(
+                                          isWeatherSever: true,
+                                        ));
+                                      } else {
+                                        logFirebaseEvent(
+                                            'IconButton_show_snack_bar');
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'else',
+                                              style: TextStyle(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                              ),
+                                            ),
+                                            duration:
+                                                Duration(milliseconds: 4000),
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondary,
+                                          ),
+                                        );
+                                        logFirebaseEvent(
+                                            'IconButton_firestore_query');
+                                        _model.userTaskListgoogle2 =
+                                            await queryUserTasksRecordOnce(
+                                          parent: currentUserReference,
+                                          singleRecord: true,
+                                        ).then((s) => s.firstOrNull);
+                                        logFirebaseEvent(
+                                            'IconButton_update_app_state');
+                                        FFAppState().TaskText1 =
+                                            _model.userTaskListgoogle2!.task1;
+                                        FFAppState().IsComplete1 = _model
+                                            .userTaskListgoogle2!.isComplete1;
+                                        FFAppState().TaskText2 =
+                                            _model.userTaskListgoogle2!.task2;
+                                        FFAppState().Iscomplete2 = _model
+                                            .userTaskListgoogle2!.isComplete2;
+                                        FFAppState().TaskText3 =
+                                            _model.userTaskListgoogle2!.task3;
+                                        FFAppState().IsComplete3 = _model
+                                            .userTaskListgoogle2!.isComplete3;
+                                        FFAppState().TaskRef1 =
+                                            _model.userTaskList2?.reference;
+                                        FFAppState().TaskRef2 = _model
+                                            .userTaskListgoogle2?.reference;
+                                        FFAppState().TaskRef3 = _model
+                                            .userTaskListgoogle2?.reference;
+                                        safeSetState(() {});
+                                      }
+                                    } else {
+                                      logFirebaseEvent(
+                                          'IconButton_show_snack_bar');
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Error Chose correct city',
+                                            style: TextStyle(
+                                              color: Color(0xFFFF0000),
+                                            ),
+                                          ),
+                                          duration:
+                                              Duration(milliseconds: 4900),
+                                          backgroundColor: Color(0xFFFFC8C8),
+                                        ),
+                                      );
+                                    }
+
+                                    logFirebaseEvent('IconButton_navigate_to');
 
                                     context.goNamedAuth(
                                         GoldenPageWidget.routeName,
