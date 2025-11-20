@@ -93,11 +93,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
           builder: (context, params) => SplashPageWidget(),
         ),
         FFRoute(
-          name: GoldenPageWidget.routeName,
-          path: GoldenPageWidget.routePath,
-          builder: (context, params) => GoldenPageWidget(),
-        ),
-        FFRoute(
           name: WeeklyTasksWidget.routeName,
           path: WeeklyTasksWidget.routePath,
           builder: (context, params) => WeeklyTasksWidget(),
@@ -116,6 +111,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
           name: SignUpPageWidget.routeName,
           path: SignUpPageWidget.routePath,
           builder: (context, params) => SignUpPageWidget(),
+        ),
+        FFRoute(
+          name: GoldenPageWidget.routeName,
+          path: GoldenPageWidget.routePath,
+          builder: (context, params) => GoldenPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

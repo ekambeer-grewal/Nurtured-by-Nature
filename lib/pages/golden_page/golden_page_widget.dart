@@ -9,6 +9,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/pages/task_card/task_card_widget.dart';
 import '/pages/task_card2/task_card2_widget.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import '/flutter_flow/random_data_util.dart' as random_data;
 import '/index.dart';
 import 'package:collection/collection.dart';
@@ -857,12 +858,35 @@ class _GoldenPageWidgetState extends State<GoldenPageWidget> {
                                               ),
                                             ),
                                           ),
-                                          Text(
-                                            '-- Days',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  font: GoogleFonts.istokWeb(
+                                          AuthUserStreamWidget(
+                                            builder: (context) => Text(
+                                              functions
+                                                  .streaklogic(
+                                                      valueOrDefault(
+                                                          currentUserDocument
+                                                              ?.streakCount,
+                                                          0),
+                                                      currentUserDocument
+                                                          ?.lastLogin)
+                                                  .toString(),
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    font: GoogleFonts.istokWeb(
+                                                      fontWeight:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .fontWeight,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .fontStyle,
+                                                    ),
+                                                    color: Colors.black,
+                                                    letterSpacing: 0.0,
                                                     fontWeight:
                                                         FlutterFlowTheme.of(
                                                                 context)
@@ -874,19 +898,7 @@ class _GoldenPageWidgetState extends State<GoldenPageWidget> {
                                                             .bodyMedium
                                                             .fontStyle,
                                                   ),
-                                                  color: Colors.black,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
-                                                ),
+                                            ),
                                           ),
                                         ],
                                       ),

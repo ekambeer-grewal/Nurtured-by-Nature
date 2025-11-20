@@ -576,299 +576,253 @@ class _LoginpageWidgetState extends State<LoginpageWidget> {
                                       },
                                     ),
                                   });
-                                  if (_model.userTaskList?.dateCreated ==
-                                      getCurrentTimestamp) {
-                                    logFirebaseEvent('Login_firestore_query');
-                                    _model.userTaskListUpdate =
-                                        await queryUserTasksRecordOnce(
-                                      parent: currentUserReference,
-                                      singleRecord: true,
-                                    ).then((s) => s.firstOrNull);
+                                  logFirebaseEvent('Login_backend_call');
+                                  _model.apiResult =
+                                      await SeverWeatherTaskCall.call(
+                                    cityName: valueOrDefault(
+                                        currentUserDocument?.city, ''),
+                                  );
+
+                                  if ((_model.apiResult?.succeeded ?? true)) {
                                     logFirebaseEvent('Login_update_app_state');
-                                    FFAppState().TaskText1 =
-                                        _model.userTaskListUpdate!.task1;
-                                    FFAppState().IsComplete1 =
-                                        _model.userTaskListUpdate!.isComplete1;
-                                    FFAppState().TaskText2 =
-                                        _model.userTaskListUpdate!.task2;
-                                    FFAppState().Iscomplete2 =
-                                        _model.userTaskListUpdate!.isComplete2;
-                                    FFAppState().TaskText3 =
-                                        _model.userTaskListUpdate!.task3;
-                                    FFAppState().IsComplete3 =
-                                        _model.userTaskListUpdate!.isComplete3;
-                                    FFAppState().TaskRef1 =
-                                        _model.userTaskListUpdate?.reference;
-                                    FFAppState().TaskRef2 =
-                                        _model.userTaskListUpdate?.reference;
-                                    FFAppState().TaskRef3 =
-                                        _model.userTaskListUpdate?.reference;
+                                    FFAppState().cityWeatherCondition =
+                                        SeverWeatherTaskCall.condition(
+                                      (_model.apiResult?.jsonBody ?? ''),
+                                    )!;
                                     safeSetState(() {});
-                                  } else {
-                                    logFirebaseEvent('Login_backend_call');
-                                    _model.apiResult =
-                                        await SeverWeatherTaskCall.call(
-                                      cityName: valueOrDefault(
-                                          currentUserDocument?.city, ''),
-                                    );
-
-                                    if ((_model.apiResult?.succeeded ?? true)) {
-                                      logFirebaseEvent(
-                                          'Login_update_app_state');
-                                      FFAppState().cityWeatherCondition =
-                                          SeverWeatherTaskCall.condition(
-                                        (_model.apiResult?.jsonBody ?? ''),
-                                      )!;
+                                    if (valueOrDefault<bool>(
+                                            currentUserDocument?.isWeatherSever,
+                                            false) &&
+                                        functions.isNotRain(FFAppState()
+                                            .cityWeatherCondition)!) {
+                                      logFirebaseEvent('Login_firestore_query');
+                                      _model.taskList =
+                                          await queryTasksRecordOnce();
+                                      // RandomIndex1
+                                      logFirebaseEvent('Login_RandomIndex1');
+                                      _model.randomInt1 =
+                                          random_data.randomInteger(0, 6);
                                       safeSetState(() {});
-                                      if (valueOrDefault<bool>(
-                                              currentUserDocument
-                                                  ?.isWeatherSever,
-                                              false) &&
-                                          functions.isNotRain(FFAppState()
-                                              .cityWeatherCondition)!) {
-                                        logFirebaseEvent(
-                                            'Login_firestore_query');
-                                        _model.taskList =
-                                            await queryTasksRecordOnce();
-                                        // RandomIndex1
-                                        logFirebaseEvent('Login_RandomIndex1');
-                                        _model.randomInt1 =
-                                            random_data.randomInteger(0, 6);
-                                        safeSetState(() {});
+                                      // RandomIndex2
+                                      logFirebaseEvent('Login_RandomIndex2');
+                                      _model.randomInt2 =
+                                          random_data.randomInteger(0, 6);
+                                      safeSetState(() {});
+                                      // RandomIndex3
+                                      logFirebaseEvent('Login_RandomIndex3');
+                                      _model.randomInt3 =
+                                          random_data.randomInteger(0, 6);
+                                      safeSetState(() {});
+                                      while ((_model.randomInt1 ==
+                                              _model.randomInt2) ||
+                                          (_model.randomInt3 ==
+                                              _model.randomInt2)) {
                                         // RandomIndex2
                                         logFirebaseEvent('Login_RandomIndex2');
-                                        _model.randomInt2 =
-                                            random_data.randomInteger(0, 6);
-                                        safeSetState(() {});
-                                        // RandomIndex3
-                                        logFirebaseEvent('Login_RandomIndex3');
-                                        _model.randomInt3 =
-                                            random_data.randomInteger(0, 6);
-                                        safeSetState(() {});
-                                        while ((_model.randomInt1 ==
-                                                _model.randomInt2) ||
-                                            (_model.randomInt3 ==
-                                                _model.randomInt2)) {
-                                          // RandomIndex2
-                                          logFirebaseEvent(
-                                              'Login_RandomIndex2');
-                                          _model.randomInt2 = null;
-                                          safeSetState(() {});
-                                        }
-                                        while ((_model.randomInt1 ==
-                                                _model.randomInt3) ||
-                                            (_model.randomInt2 ==
-                                                _model.randomInt3)) {
-                                          // RandomIndex3
-                                          logFirebaseEvent(
-                                              'Login_RandomIndex3');
-                                          _model.randomInt3 = null;
-                                          safeSetState(() {});
-                                        }
-                                        logFirebaseEvent(
-                                            'Login_firestore_query');
-                                        _model.userTaskList =
-                                            await queryUserTasksRecordOnce(
-                                          parent: currentUserReference,
-                                          singleRecord: true,
-                                        ).then((s) => s.firstOrNull);
-                                        logFirebaseEvent('Login_backend_call');
-
-                                        await _model.userTaskList!.reference
-                                            .update(createUserTasksRecordData(
-                                          task1: _model.taskList
-                                              ?.elementAtOrNull(
-                                                  _model.randomInt1!)
-                                              ?.text,
-                                          task2: _model.taskList
-                                              ?.elementAtOrNull(
-                                                  _model.randomInt2!)
-                                              ?.text,
-                                          task3: _model.taskList
-                                              ?.elementAtOrNull(
-                                                  _model.randomInt3!)
-                                              ?.text,
-                                          isComplete1: false,
-                                          isComplete2: false,
-                                          isComplete3: false,
-                                        ));
-                                        logFirebaseEvent(
-                                            'Login_update_app_state');
-                                        FFAppState().TaskText1 =
-                                            _model.userTaskList!.task1;
-                                        FFAppState().IsComplete1 =
-                                            _model.userTaskList!.isComplete1;
-                                        FFAppState().TaskText2 =
-                                            _model.userTaskList!.task2;
-                                        FFAppState().Iscomplete2 =
-                                            _model.userTaskList!.isComplete2;
-                                        FFAppState().TaskText3 =
-                                            _model.userTaskList!.task3;
-                                        FFAppState().IsComplete3 =
-                                            _model.userTaskList!.isComplete3;
-                                        FFAppState().TaskRef1 =
-                                            _model.userTaskList?.reference;
-                                        FFAppState().TaskRef2 =
-                                            _model.userTaskList?.reference;
-                                        FFAppState().TaskRef3 =
-                                            _model.userTaskList?.reference;
-                                        safeSetState(() {});
-                                        logFirebaseEvent('Login_backend_call');
-
-                                        await currentUserReference!
-                                            .update(createUsersRecordData(
-                                          isWeatherSever: false,
-                                        ));
-                                      } else if (!functions.isNotRain(
-                                              FFAppState()
-                                                  .cityWeatherCondition)! &&
-                                          !valueOrDefault<bool>(
-                                              currentUserDocument
-                                                  ?.isWeatherSever,
-                                              false)) {
-                                        logFirebaseEvent(
-                                            'Login_firestore_query');
-                                        _model.taskListSever =
-                                            await querySeverConditionTaskRecordOnce(
-                                          limit: 7,
-                                        );
-                                        // RandomIndex1
-                                        logFirebaseEvent('Login_RandomIndex1');
-                                        _model.randomInt1 =
-                                            random_data.randomInteger(0, 6);
-                                        safeSetState(() {});
-                                        // RandomIndex2
-                                        logFirebaseEvent('Login_RandomIndex2');
-                                        _model.randomInt2 =
-                                            random_data.randomInteger(0, 6);
-                                        safeSetState(() {});
-                                        // RandomIndex3
-                                        logFirebaseEvent('Login_RandomIndex3');
-                                        _model.randomInt3 =
-                                            random_data.randomInteger(0, 6);
-                                        safeSetState(() {});
-                                        while ((_model.randomInt1 ==
-                                                _model.randomInt2) ||
-                                            (_model.randomInt3 ==
-                                                _model.randomInt2)) {
-                                          // RandomIndex2
-                                          logFirebaseEvent(
-                                              'Login_RandomIndex2');
-                                          _model.randomInt2 = null;
-                                          safeSetState(() {});
-                                        }
-                                        while ((_model.randomInt1 ==
-                                                _model.randomInt3) ||
-                                            (_model.randomInt2 ==
-                                                _model.randomInt3)) {
-                                          // RandomIndex3
-                                          logFirebaseEvent(
-                                              'Login_RandomIndex3');
-                                          _model.randomInt3 = null;
-                                          safeSetState(() {});
-                                        }
-                                        logFirebaseEvent(
-                                            'Login_firestore_query');
-                                        _model.userTaskSeverList =
-                                            await queryUserTasksRecordOnce(
-                                          parent: currentUserReference,
-                                          singleRecord: true,
-                                        ).then((s) => s.firstOrNull);
-                                        logFirebaseEvent('Login_backend_call');
-
-                                        await _model
-                                            .userTaskSeverList!.reference
-                                            .update(createUserTasksRecordData(
-                                          task1: _model.taskListSever
-                                              ?.elementAtOrNull(
-                                                  _model.randomInt1!)
-                                              ?.task,
-                                          task2: _model.taskListSever
-                                              ?.elementAtOrNull(
-                                                  _model.randomInt2!)
-                                              ?.task,
-                                          task3: _model.taskListSever
-                                              ?.elementAtOrNull(
-                                                  _model.randomInt3!)
-                                              ?.task,
-                                          isComplete1: false,
-                                          isComplete2: false,
-                                          isComplete3: false,
-                                        ));
-                                        logFirebaseEvent(
-                                            'Login_update_app_state');
-                                        FFAppState().TaskText1 =
-                                            _model.userTaskSeverList!.task1;
-                                        FFAppState().IsComplete1 = _model
-                                            .userTaskSeverList!.isComplete1;
-                                        FFAppState().TaskText2 =
-                                            _model.userTaskSeverList!.task2;
-                                        FFAppState().Iscomplete2 = _model
-                                            .userTaskSeverList!.isComplete2;
-                                        FFAppState().TaskText3 =
-                                            _model.userTaskSeverList!.task3;
-                                        FFAppState().IsComplete3 = _model
-                                            .userTaskSeverList!.isComplete3;
-                                        FFAppState().TaskRef1 =
-                                            _model.userTaskSeverList?.reference;
-                                        FFAppState().TaskRef2 =
-                                            _model.userTaskSeverList?.reference;
-                                        FFAppState().TaskRef3 =
-                                            _model.userTaskSeverList?.reference;
-                                        safeSetState(() {});
-                                        logFirebaseEvent('Login_backend_call');
-
-                                        await currentUserReference!
-                                            .update(createUsersRecordData(
-                                          isWeatherSever: true,
-                                        ));
-                                      } else {
-                                        logFirebaseEvent(
-                                            'Login_firestore_query');
-                                        _model.userTaskList2 =
-                                            await queryUserTasksRecordOnce(
-                                          parent: currentUserReference,
-                                          singleRecord: true,
-                                        ).then((s) => s.firstOrNull);
-                                        logFirebaseEvent(
-                                            'Login_update_app_state');
-                                        FFAppState().TaskText1 =
-                                            _model.userTaskList2!.task1;
-                                        FFAppState().IsComplete1 =
-                                            _model.userTaskList2!.isComplete1;
-                                        FFAppState().TaskText2 =
-                                            _model.userTaskList2!.task2;
-                                        FFAppState().Iscomplete2 =
-                                            _model.userTaskList2!.isComplete2;
-                                        FFAppState().TaskText3 =
-                                            _model.userTaskList2!.task3;
-                                        FFAppState().IsComplete3 =
-                                            _model.userTaskList2!.isComplete3;
-                                        FFAppState().TaskRef1 =
-                                            _model.userTaskList2?.reference;
-                                        FFAppState().TaskRef2 =
-                                            _model.userTaskList2?.reference;
-                                        FFAppState().TaskRef3 =
-                                            _model.userTaskList2?.reference;
+                                        _model.randomInt2 = null;
                                         safeSetState(() {});
                                       }
-                                    } else {
-                                      logFirebaseEvent('Login_show_snack_bar');
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            'Error Chose correct city',
-                                            style: TextStyle(
-                                              color: Color(0xFFFF0000),
-                                            ),
-                                          ),
-                                          duration:
-                                              Duration(milliseconds: 4900),
-                                          backgroundColor: Color(0xFFFFC8C8),
-                                        ),
+                                      while ((_model.randomInt1 ==
+                                              _model.randomInt3) ||
+                                          (_model.randomInt2 ==
+                                              _model.randomInt3)) {
+                                        // RandomIndex3
+                                        logFirebaseEvent('Login_RandomIndex3');
+                                        _model.randomInt3 = null;
+                                        safeSetState(() {});
+                                      }
+                                      logFirebaseEvent('Login_firestore_query');
+                                      _model.userTaskList =
+                                          await queryUserTasksRecordOnce(
+                                        parent: currentUserReference,
+                                        singleRecord: true,
+                                      ).then((s) => s.firstOrNull);
+                                      logFirebaseEvent('Login_backend_call');
+
+                                      await _model.userTaskList!.reference
+                                          .update(createUserTasksRecordData(
+                                        task1: _model.taskList
+                                            ?.elementAtOrNull(
+                                                _model.randomInt1!)
+                                            ?.text,
+                                        task2: _model.taskList
+                                            ?.elementAtOrNull(
+                                                _model.randomInt2!)
+                                            ?.text,
+                                        task3: _model.taskList
+                                            ?.elementAtOrNull(
+                                                _model.randomInt3!)
+                                            ?.text,
+                                        isComplete1: false,
+                                        isComplete2: false,
+                                        isComplete3: false,
+                                      ));
+                                      logFirebaseEvent(
+                                          'Login_update_app_state');
+                                      FFAppState().TaskText1 =
+                                          _model.userTaskList!.task1;
+                                      FFAppState().IsComplete1 =
+                                          _model.userTaskList!.isComplete1;
+                                      FFAppState().TaskText2 =
+                                          _model.userTaskList!.task2;
+                                      FFAppState().Iscomplete2 =
+                                          _model.userTaskList!.isComplete2;
+                                      FFAppState().TaskText3 =
+                                          _model.userTaskList!.task3;
+                                      FFAppState().IsComplete3 =
+                                          _model.userTaskList!.isComplete3;
+                                      FFAppState().TaskRef1 =
+                                          _model.userTaskList?.reference;
+                                      FFAppState().TaskRef2 =
+                                          _model.userTaskList?.reference;
+                                      FFAppState().TaskRef3 =
+                                          _model.userTaskList?.reference;
+                                      safeSetState(() {});
+                                      logFirebaseEvent('Login_backend_call');
+
+                                      await currentUserReference!
+                                          .update(createUsersRecordData(
+                                        isWeatherSever: false,
+                                      ));
+                                    } else if (!functions.isNotRain(FFAppState()
+                                            .cityWeatherCondition)! &&
+                                        !valueOrDefault<bool>(
+                                            currentUserDocument?.isWeatherSever,
+                                            false)) {
+                                      logFirebaseEvent('Login_firestore_query');
+                                      _model.taskListSever =
+                                          await querySeverConditionTaskRecordOnce(
+                                        limit: 7,
                                       );
+                                      // RandomIndex1
+                                      logFirebaseEvent('Login_RandomIndex1');
+                                      _model.randomInt1 =
+                                          random_data.randomInteger(0, 6);
+                                      safeSetState(() {});
+                                      // RandomIndex2
+                                      logFirebaseEvent('Login_RandomIndex2');
+                                      _model.randomInt2 =
+                                          random_data.randomInteger(0, 6);
+                                      safeSetState(() {});
+                                      // RandomIndex3
+                                      logFirebaseEvent('Login_RandomIndex3');
+                                      _model.randomInt3 =
+                                          random_data.randomInteger(0, 6);
+                                      safeSetState(() {});
+                                      while ((_model.randomInt1 ==
+                                              _model.randomInt2) ||
+                                          (_model.randomInt3 ==
+                                              _model.randomInt2)) {
+                                        // RandomIndex2
+                                        logFirebaseEvent('Login_RandomIndex2');
+                                        _model.randomInt2 = null;
+                                        safeSetState(() {});
+                                      }
+                                      while ((_model.randomInt1 ==
+                                              _model.randomInt3) ||
+                                          (_model.randomInt2 ==
+                                              _model.randomInt3)) {
+                                        // RandomIndex3
+                                        logFirebaseEvent('Login_RandomIndex3');
+                                        _model.randomInt3 = null;
+                                        safeSetState(() {});
+                                      }
+                                      logFirebaseEvent('Login_firestore_query');
+                                      _model.userTaskSeverList =
+                                          await queryUserTasksRecordOnce(
+                                        parent: currentUserReference,
+                                        singleRecord: true,
+                                      ).then((s) => s.firstOrNull);
+                                      logFirebaseEvent('Login_backend_call');
+
+                                      await _model.userTaskSeverList!.reference
+                                          .update(createUserTasksRecordData(
+                                        task1: _model.taskListSever
+                                            ?.elementAtOrNull(
+                                                _model.randomInt1!)
+                                            ?.task,
+                                        task2: _model.taskListSever
+                                            ?.elementAtOrNull(
+                                                _model.randomInt2!)
+                                            ?.task,
+                                        task3: _model.taskListSever
+                                            ?.elementAtOrNull(
+                                                _model.randomInt3!)
+                                            ?.task,
+                                        isComplete1: false,
+                                        isComplete2: false,
+                                        isComplete3: false,
+                                      ));
+                                      logFirebaseEvent(
+                                          'Login_update_app_state');
+                                      FFAppState().TaskText1 =
+                                          _model.userTaskSeverList!.task1;
+                                      FFAppState().IsComplete1 =
+                                          _model.userTaskSeverList!.isComplete1;
+                                      FFAppState().TaskText2 =
+                                          _model.userTaskSeverList!.task2;
+                                      FFAppState().Iscomplete2 =
+                                          _model.userTaskSeverList!.isComplete2;
+                                      FFAppState().TaskText3 =
+                                          _model.userTaskSeverList!.task3;
+                                      FFAppState().IsComplete3 =
+                                          _model.userTaskSeverList!.isComplete3;
+                                      FFAppState().TaskRef1 =
+                                          _model.userTaskSeverList?.reference;
+                                      FFAppState().TaskRef2 =
+                                          _model.userTaskSeverList?.reference;
+                                      FFAppState().TaskRef3 =
+                                          _model.userTaskSeverList?.reference;
+                                      safeSetState(() {});
+                                      logFirebaseEvent('Login_backend_call');
+
+                                      await currentUserReference!
+                                          .update(createUsersRecordData(
+                                        isWeatherSever: true,
+                                      ));
+                                    } else {
+                                      logFirebaseEvent('Login_firestore_query');
+                                      _model.userTaskList2 =
+                                          await queryUserTasksRecordOnce(
+                                        parent: currentUserReference,
+                                        singleRecord: true,
+                                      ).then((s) => s.firstOrNull);
+                                      logFirebaseEvent(
+                                          'Login_update_app_state');
+                                      FFAppState().TaskText1 =
+                                          _model.userTaskList2!.task1;
+                                      FFAppState().IsComplete1 =
+                                          _model.userTaskList2!.isComplete1;
+                                      FFAppState().TaskText2 =
+                                          _model.userTaskList2!.task2;
+                                      FFAppState().Iscomplete2 =
+                                          _model.userTaskList2!.isComplete2;
+                                      FFAppState().TaskText3 =
+                                          _model.userTaskList2!.task3;
+                                      FFAppState().IsComplete3 =
+                                          _model.userTaskList2!.isComplete3;
+                                      FFAppState().TaskRef1 =
+                                          _model.userTaskList2?.reference;
+                                      FFAppState().TaskRef2 =
+                                          _model.userTaskList2?.reference;
+                                      FFAppState().TaskRef3 =
+                                          _model.userTaskList2?.reference;
+                                      safeSetState(() {});
                                     }
+                                  } else {
+                                    logFirebaseEvent('Login_show_snack_bar');
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Error Chose correct city',
+                                          style: TextStyle(
+                                            color: Color(0xFFFF0000),
+                                          ),
+                                        ),
+                                        duration: Duration(milliseconds: 4900),
+                                        backgroundColor: Color(0xFFFFC8C8),
+                                      ),
+                                    );
                                   }
 
                                   logFirebaseEvent('Login_navigate_to');

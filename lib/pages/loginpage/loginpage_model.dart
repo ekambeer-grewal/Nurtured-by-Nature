@@ -25,8 +25,6 @@ class LoginpageModel extends FlutterFlowModel<LoginpageWidget> {
   TextEditingController? passwordTextController;
   late bool passwordVisibility;
   String? Function(BuildContext, String?)? passwordTextControllerValidator;
-  // Stores action output result for [Firestore Query - Query a collection] action in Login widget.
-  UserTasksRecord? userTaskListUpdate;
   // Stores action output result for [Backend Call - API (SeverWeatherTask)] action in Login widget.
   ApiCallResponse? apiResult;
   // Stores action output result for [Firestore Query - Query a collection] action in Login widget.
