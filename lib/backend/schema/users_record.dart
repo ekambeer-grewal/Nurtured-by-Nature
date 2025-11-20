@@ -75,6 +75,11 @@ class UsersRecord extends FirestoreRecord {
   bool get npsDone => _npsDone ?? false;
   bool hasNpsDone() => _npsDone != null;
 
+  // "lastLogin" field.
+  DateTime? _lastLogin;
+  DateTime? get lastLogin => _lastLogin;
+  bool hasLastLogin() => _lastLogin != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -88,6 +93,7 @@ class UsersRecord extends FirestoreRecord {
     _recommendScore = castToType<int>(snapshotData['recommendScore']);
     _wellnessScore = castToType<int>(snapshotData['wellnessScore']);
     _npsDone = snapshotData['nps_done'] as bool?;
+    _lastLogin = snapshotData['lastLogin'] as DateTime?;
   }
 
   static CollectionReference get collection =>
@@ -136,6 +142,7 @@ Map<String, dynamic> createUsersRecordData({
   int? recommendScore,
   int? wellnessScore,
   bool? npsDone,
+  DateTime? lastLogin,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -151,6 +158,7 @@ Map<String, dynamic> createUsersRecordData({
       'recommendScore': recommendScore,
       'wellnessScore': wellnessScore,
       'nps_done': npsDone,
+      'lastLogin': lastLogin,
     }.withoutNulls,
   );
 
@@ -173,7 +181,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.experienceScore == e2?.experienceScore &&
         e1?.recommendScore == e2?.recommendScore &&
         e1?.wellnessScore == e2?.wellnessScore &&
-        e1?.npsDone == e2?.npsDone;
+        e1?.npsDone == e2?.npsDone &&
+        e1?.lastLogin == e2?.lastLogin;
   }
 
   @override
@@ -189,7 +198,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.experienceScore,
         e?.recommendScore,
         e?.wellnessScore,
-        e?.npsDone
+        e?.npsDone,
+        e?.lastLogin
       ]);
 
   @override

@@ -8,6 +8,7 @@ import 'schema/util/firestore_util.dart';
 import 'schema/tasks_record.dart';
 import 'schema/users_record.dart';
 import 'schema/user_tasks_record.dart';
+import 'schema/sever_condition_task_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
@@ -19,6 +20,7 @@ export 'schema/util/schema_util.dart';
 export 'schema/tasks_record.dart';
 export 'schema/users_record.dart';
 export 'schema/user_tasks_record.dart';
+export 'schema/sever_condition_task_record.dart';
 
 /// Functions to query TasksRecords (as a Stream and as a Future).
 Future<int> queryTasksRecordCount({
@@ -129,6 +131,43 @@ Future<List<UserTasksRecord>> queryUserTasksRecordOnce({
     queryCollectionOnce(
       UserTasksRecord.collection(parent),
       UserTasksRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query SeverConditionTaskRecords (as a Stream and as a Future).
+Future<int> querySeverConditionTaskRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      SeverConditionTaskRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<SeverConditionTaskRecord>> querySeverConditionTaskRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      SeverConditionTaskRecord.collection,
+      SeverConditionTaskRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<SeverConditionTaskRecord>> querySeverConditionTaskRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      SeverConditionTaskRecord.collection,
+      SeverConditionTaskRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

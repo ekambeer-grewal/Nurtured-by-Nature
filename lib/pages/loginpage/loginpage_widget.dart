@@ -559,6 +559,9 @@ class _LoginpageWidgetState extends State<LoginpageWidget> {
                                   logFirebaseEvent('Login_backend_call');
 
                                   await currentUserReference!.update({
+                                    ...createUsersRecordData(
+                                      lastLogin: getCurrentTimestamp,
+                                    ),
                                     ...mapToFirestore(
                                       {
                                         'logincount': FieldValue.increment(1),
