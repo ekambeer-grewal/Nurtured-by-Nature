@@ -1,3 +1,4 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'loginpage_widget.dart' show LoginpageWidget;
@@ -6,15 +7,19 @@ import 'package:flutter/material.dart';
 class LoginpageModel extends FlutterFlowModel<LoginpageWidget> {
   ///  State fields for stateful widgets in this page.
 
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode1;
-  TextEditingController? textController1;
-  String? Function(BuildContext, String?)? textController1Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode2;
-  TextEditingController? textController2;
+  // State field(s) for Email widget.
+  FocusNode? emailFocusNode;
+  TextEditingController? emailTextController;
+  String? Function(BuildContext, String?)? emailTextControllerValidator;
+  // State field(s) for Password widget.
+  FocusNode? passwordFocusNode;
+  TextEditingController? passwordTextController;
   late bool passwordVisibility;
-  String? Function(BuildContext, String?)? textController2Validator;
+  String? Function(BuildContext, String?)? passwordTextControllerValidator;
+  // Stores action output result for [Firestore Query - Query a collection] action in Login widget.
+  UserTasksRecord? userTaskList;
+  // Stores action output result for [Firestore Query - Query a collection] action in IconButton widget.
+  UserTasksRecord? userTaskListGoogle;
 
   @override
   void initState(BuildContext context) {
@@ -23,10 +28,10 @@ class LoginpageModel extends FlutterFlowModel<LoginpageWidget> {
 
   @override
   void dispose() {
-    textFieldFocusNode1?.dispose();
-    textController1?.dispose();
+    emailFocusNode?.dispose();
+    emailTextController?.dispose();
 
-    textFieldFocusNode2?.dispose();
-    textController2?.dispose();
+    passwordFocusNode?.dispose();
+    passwordTextController?.dispose();
   }
 }

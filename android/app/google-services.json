@@ -12,7 +12,20 @@
           "package_name": "com.mycompany.nurturedbynature"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "942080026785-l82108atmm49037tppos8ojv0lgddvij.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.nurturedbynature",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "942080026785-cer48a6rqrevgtm5ffq5sg327gu2ggqg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDd5BFm6LjwGAG4VixNe0OndPhnPVi-Qio"
@@ -20,7 +33,63 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "942080026785-cer48a6rqrevgtm5ffq5sg327gu2ggqg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "942080026785-88a216crajj58ephskqagmnjcqr0e5f7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.nurturedbynature"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942080026785:android:799289cb0cb158df1368e0",
+        "android_client_info": {
+          "package_name": "com.uricsc305.nurturedbynature"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "942080026785-h45valobsso8l49p06uu8p4h6078id33.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uricsc305.nurturedbynature",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "942080026785-cer48a6rqrevgtm5ffq5sg327gu2ggqg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDd5BFm6LjwGAG4VixNe0OndPhnPVi-Qio"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "942080026785-cer48a6rqrevgtm5ffq5sg327gu2ggqg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "942080026785-88a216crajj58ephskqagmnjcqr0e5f7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.nurturedbynature"
+              }
+            }
+          ]
         }
       }
     }

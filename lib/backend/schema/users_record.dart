@@ -45,6 +45,41 @@ class UsersRecord extends FirestoreRecord {
   String get phoneNumber => _phoneNumber ?? '';
   bool hasPhoneNumber() => _phoneNumber != null;
 
+  // "city" field.
+  String? _city;
+  String get city => _city ?? '';
+  bool hasCity() => _city != null;
+
+  // "logincount" field.
+  int? _logincount;
+  int get logincount => _logincount ?? 0;
+  bool hasLogincount() => _logincount != null;
+
+  // "experienceScore" field.
+  int? _experienceScore;
+  int get experienceScore => _experienceScore ?? 0;
+  bool hasExperienceScore() => _experienceScore != null;
+
+  // "recommendScore" field.
+  int? _recommendScore;
+  int get recommendScore => _recommendScore ?? 0;
+  bool hasRecommendScore() => _recommendScore != null;
+
+  // "wellnessScore" field.
+  int? _wellnessScore;
+  int get wellnessScore => _wellnessScore ?? 0;
+  bool hasWellnessScore() => _wellnessScore != null;
+
+  // "nps_done" field.
+  bool? _npsDone;
+  bool get npsDone => _npsDone ?? false;
+  bool hasNpsDone() => _npsDone != null;
+
+  // "lastLogin" field.
+  DateTime? _lastLogin;
+  DateTime? get lastLogin => _lastLogin;
+  bool hasLastLogin() => _lastLogin != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -52,6 +87,13 @@ class UsersRecord extends FirestoreRecord {
     _uid = snapshotData['uid'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
     _phoneNumber = snapshotData['phone_number'] as String?;
+    _city = snapshotData['city'] as String?;
+    _logincount = castToType<int>(snapshotData['logincount']);
+    _experienceScore = castToType<int>(snapshotData['experienceScore']);
+    _recommendScore = castToType<int>(snapshotData['recommendScore']);
+    _wellnessScore = castToType<int>(snapshotData['wellnessScore']);
+    _npsDone = snapshotData['nps_done'] as bool?;
+    _lastLogin = snapshotData['lastLogin'] as DateTime?;
   }
 
   static CollectionReference get collection =>
@@ -94,6 +136,13 @@ Map<String, dynamic> createUsersRecordData({
   String? uid,
   DateTime? createdTime,
   String? phoneNumber,
+  String? city,
+  int? logincount,
+  int? experienceScore,
+  int? recommendScore,
+  int? wellnessScore,
+  bool? npsDone,
+  DateTime? lastLogin,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -103,6 +152,13 @@ Map<String, dynamic> createUsersRecordData({
       'uid': uid,
       'created_time': createdTime,
       'phone_number': phoneNumber,
+      'city': city,
+      'logincount': logincount,
+      'experienceScore': experienceScore,
+      'recommendScore': recommendScore,
+      'wellnessScore': wellnessScore,
+      'nps_done': npsDone,
+      'lastLogin': lastLogin,
     }.withoutNulls,
   );
 
@@ -119,7 +175,14 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.photoUrl == e2?.photoUrl &&
         e1?.uid == e2?.uid &&
         e1?.createdTime == e2?.createdTime &&
-        e1?.phoneNumber == e2?.phoneNumber;
+        e1?.phoneNumber == e2?.phoneNumber &&
+        e1?.city == e2?.city &&
+        e1?.logincount == e2?.logincount &&
+        e1?.experienceScore == e2?.experienceScore &&
+        e1?.recommendScore == e2?.recommendScore &&
+        e1?.wellnessScore == e2?.wellnessScore &&
+        e1?.npsDone == e2?.npsDone &&
+        e1?.lastLogin == e2?.lastLogin;
   }
 
   @override
@@ -129,7 +192,14 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.photoUrl,
         e?.uid,
         e?.createdTime,
-        e?.phoneNumber
+        e?.phoneNumber,
+        e?.city,
+        e?.logincount,
+        e?.experienceScore,
+        e?.recommendScore,
+        e?.wellnessScore,
+        e?.npsDone,
+        e?.lastLogin
       ]);
 
   @override
