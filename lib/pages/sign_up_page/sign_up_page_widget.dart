@@ -340,6 +340,7 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                                     .bodyMedium
                                                     .fontStyle,
                                           ),
+                                          color: Color(0xFF14181B),
                                           letterSpacing: 0.0,
                                           fontWeight:
                                               FlutterFlowTheme.of(context)
@@ -488,6 +489,7 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                                     .bodyMedium
                                                     .fontStyle,
                                           ),
+                                          color: Color(0xFF14181B),
                                           letterSpacing: 0.0,
                                           fontWeight:
                                               FlutterFlowTheme.of(context)
@@ -629,6 +631,7 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                                   .bodyMedium
                                                   .fontStyle,
                                         ),
+                                        color: Color(0xFF14181B),
                                         letterSpacing: 0.0,
                                         fontWeight: FlutterFlowTheme.of(context)
                                             .bodyMedium
@@ -688,121 +691,11 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                         },
                                       ),
                                     });
-                                    logFirebaseEvent('Signup_firestore_query');
-                                    _model.taskList =
-                                        await queryTasksRecordOnce();
-                                    // RandomIndex1
-                                    logFirebaseEvent('Signup_RandomIndex1');
-                                    _model.randomIndex1 =
-                                        random_data.randomInteger(0, 6);
-                                    safeSetState(() {});
-                                    // RandomIndex2
-                                    logFirebaseEvent('Signup_RandomIndex2');
-                                    _model.randomIndex2 =
-                                        random_data.randomInteger(0, 6);
-                                    safeSetState(() {});
-                                    // RandomIndex3
-                                    logFirebaseEvent('Signup_RandomIndex3');
-                                    _model.randomIndex3 =
-                                        random_data.randomInteger(0, 6);
-                                    safeSetState(() {});
-                                    while ((_model.randomIndex1 ==
-                                            _model.randomIndex2) ||
-                                        (_model.randomIndex3 ==
-                                            _model.randomIndex2)) {
-                                      // RandomIndex2
-                                      logFirebaseEvent('Signup_RandomIndex2');
-                                      _model.randomIndex2 = 0;
-                                      safeSetState(() {});
-                                    }
-                                    while ((_model.randomIndex1 ==
-                                            _model.randomIndex3) ||
-                                        (_model.randomIndex2 ==
-                                            _model.randomIndex3)) {
-                                      // RandomIndex3
-                                      logFirebaseEvent('Signup_RandomIndex3');
-                                      _model.randomIndex3 = 0;
-                                      safeSetState(() {});
-                                    }
-                                    logFirebaseEvent(
-                                        'Signup_update_page_state');
-                                    _model.taskText1 = _model.taskList
-                                        ?.elementAtOrNull(_model.randomIndex1)
-                                        ?.text;
-                                    _model.taskText2 = _model.taskList
-                                        ?.elementAtOrNull(_model.randomIndex2)
-                                        ?.text;
-                                    _model.taskText3 = _model.taskList
-                                        ?.elementAtOrNull(_model.randomIndex3)
-                                        ?.text;
-                                    safeSetState(() {});
-                                    logFirebaseEvent('Signup_backend_call');
-
-                                    var userTasksRecordReference =
-                                        UserTasksRecord.createDoc(
-                                            currentUserReference!);
-                                    await userTasksRecordReference
-                                        .set(createUserTasksRecordData(
-                                      task1: _model.taskText1,
-                                      isComplete1: _model.taskList
-                                          ?.elementAtOrNull(_model.randomIndex1)
-                                          ?.isComplete,
-                                      task2: _model.taskText2,
-                                      task3: _model.taskText3,
-                                      isComplete2: _model.taskList
-                                          ?.elementAtOrNull(_model.randomIndex2)
-                                          ?.isComplete,
-                                      isComplete3: _model.taskList
-                                          ?.elementAtOrNull(_model.randomIndex3)
-                                          ?.isComplete,
-                                    ));
-                                    _model.userTaskList =
-                                        UserTasksRecord.getDocumentFromData(
-                                            createUserTasksRecordData(
-                                              task1: _model.taskText1,
-                                              isComplete1: _model.taskList
-                                                  ?.elementAtOrNull(
-                                                      _model.randomIndex1)
-                                                  ?.isComplete,
-                                              task2: _model.taskText2,
-                                              task3: _model.taskText3,
-                                              isComplete2: _model.taskList
-                                                  ?.elementAtOrNull(
-                                                      _model.randomIndex2)
-                                                  ?.isComplete,
-                                              isComplete3: _model.taskList
-                                                  ?.elementAtOrNull(
-                                                      _model.randomIndex3)
-                                                  ?.isComplete,
-                                            ),
-                                            userTasksRecordReference);
-                                    logFirebaseEvent('Signup_update_app_state');
-                                    FFAppState().TaskText1 =
-                                        _model.userTaskList!.task1;
-                                    FFAppState().IsComplete1 =
-                                        _model.userTaskList!.isComplete1;
-                                    FFAppState().TaskText2 =
-                                        _model.userTaskList!.task2;
-                                    FFAppState().Iscomplete2 =
-                                        _model.userTaskList!.isComplete2;
-                                    FFAppState().TaskText3 =
-                                        _model.userTaskList!.task3;
-                                    FFAppState().IsComplete3 =
-                                        _model.userTaskList!.isComplete3;
-                                    FFAppState().TaskRef1 =
-                                        _model.userTaskList?.reference;
-                                    FFAppState().TaskRef2 =
-                                        _model.userTaskList?.reference;
-                                    FFAppState().TaskRef3 =
-                                        _model.userTaskList?.reference;
-                                    safeSetState(() {});
                                     logFirebaseEvent('Signup_navigate_to');
 
                                     context.pushNamedAuth(
                                         OnboardingWidget.routeName,
                                         context.mounted);
-
-                                    safeSetState(() {});
                                   },
                                   text: 'Sign Up',
                                   options: FFButtonOptions(
@@ -977,13 +870,13 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                       }
                                       logFirebaseEvent(
                                           'IconButton_update_page_state');
-                                      _model.taskText1 = _model.taskList
+                                      _model.taskText1 = _model.taskListGoogle
                                           ?.elementAtOrNull(_model.randomIndex1)
                                           ?.text;
-                                      _model.taskText2 = _model.taskList
+                                      _model.taskText2 = _model.taskListGoogle
                                           ?.elementAtOrNull(_model.randomIndex2)
                                           ?.text;
-                                      _model.taskText3 = _model.taskList
+                                      _model.taskText3 = _model.taskListGoogle
                                           ?.elementAtOrNull(_model.randomIndex3)
                                           ?.text;
                                       safeSetState(() {});
@@ -996,61 +889,43 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                       await userTasksRecordReference
                                           .set(createUserTasksRecordData(
                                         task1: _model.taskText1,
-                                        isComplete1: _model.taskList
-                                            ?.elementAtOrNull(
-                                                _model.randomIndex1)
-                                            ?.isComplete,
+                                        isComplete1: false,
                                         task2: _model.taskText2,
                                         task3: _model.taskText3,
-                                        isComplete2: _model.taskList
-                                            ?.elementAtOrNull(
-                                                _model.randomIndex2)
-                                            ?.isComplete,
-                                        isComplete3: _model.taskList
-                                            ?.elementAtOrNull(
-                                                _model.randomIndex3)
-                                            ?.isComplete,
+                                        isComplete2: false,
+                                        isComplete3: false,
                                       ));
                                       _model.userTaskListGoogle =
                                           UserTasksRecord.getDocumentFromData(
                                               createUserTasksRecordData(
                                                 task1: _model.taskText1,
-                                                isComplete1: _model.taskList
-                                                    ?.elementAtOrNull(
-                                                        _model.randomIndex1)
-                                                    ?.isComplete,
+                                                isComplete1: false,
                                                 task2: _model.taskText2,
                                                 task3: _model.taskText3,
-                                                isComplete2: _model.taskList
-                                                    ?.elementAtOrNull(
-                                                        _model.randomIndex2)
-                                                    ?.isComplete,
-                                                isComplete3: _model.taskList
-                                                    ?.elementAtOrNull(
-                                                        _model.randomIndex3)
-                                                    ?.isComplete,
+                                                isComplete2: false,
+                                                isComplete3: false,
                                               ),
                                               userTasksRecordReference);
                                       logFirebaseEvent(
                                           'IconButton_update_app_state');
                                       FFAppState().TaskText1 =
-                                          _model.userTaskList!.task1;
-                                      FFAppState().IsComplete1 =
-                                          _model.userTaskList!.isComplete1;
+                                          _model.userTaskListGoogle!.task1;
+                                      FFAppState().IsComplete1 = _model
+                                          .userTaskListGoogle!.isComplete1;
                                       FFAppState().TaskText2 =
-                                          _model.userTaskList!.task2;
-                                      FFAppState().Iscomplete2 =
-                                          _model.userTaskList!.isComplete2;
+                                          _model.userTaskListGoogle!.task2;
+                                      FFAppState().Iscomplete2 = _model
+                                          .userTaskListGoogle!.isComplete2;
                                       FFAppState().TaskText3 =
-                                          _model.userTaskList!.task3;
-                                      FFAppState().IsComplete3 =
-                                          _model.userTaskList!.isComplete3;
+                                          _model.userTaskListGoogle!.task3;
+                                      FFAppState().IsComplete3 = _model
+                                          .userTaskListGoogle!.isComplete3;
                                       FFAppState().TaskRef1 =
-                                          _model.userTaskList?.reference;
+                                          _model.userTaskListGoogle?.reference;
                                       FFAppState().TaskRef2 =
-                                          _model.userTaskList?.reference;
+                                          _model.userTaskListGoogle?.reference;
                                       FFAppState().TaskRef3 =
-                                          _model.userTaskList?.reference;
+                                          _model.userTaskListGoogle?.reference;
                                       safeSetState(() {});
                                       logFirebaseEvent(
                                           'IconButton_navigate_to');

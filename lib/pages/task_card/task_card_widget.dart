@@ -140,6 +140,9 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
                                 .update(createUserTasksRecordData(
                                   isComplete1: true,
                                 ));
+                            logFirebaseEvent('Checkbox_update_app_state');
+                            FFAppState().IsComplete1 = true;
+                            safeSetState(() {});
                             logFirebaseEvent('Checkbox_bottom_sheet');
                             await showModalBottomSheet(
                               isScrollControlled: true,
@@ -163,6 +166,9 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
                                 .update(createUserTasksRecordData(
                                   isComplete1: false,
                                 ));
+                            logFirebaseEvent('Checkbox_update_app_state');
+                            FFAppState().IsComplete1 = false;
+                            safeSetState(() {});
                           }
                         },
                         side: (FlutterFlowTheme.of(context).alternate != null)

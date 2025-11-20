@@ -75,6 +75,11 @@ class UsersRecord extends FirestoreRecord {
   bool get npsDone => _npsDone ?? false;
   bool hasNpsDone() => _npsDone != null;
 
+  // "isWeatherSever" field.
+  bool? _isWeatherSever;
+  bool get isWeatherSever => _isWeatherSever ?? false;
+  bool hasIsWeatherSever() => _isWeatherSever != null;
+
   // "lastLogin" field.
   DateTime? _lastLogin;
   DateTime? get lastLogin => _lastLogin;
@@ -93,6 +98,7 @@ class UsersRecord extends FirestoreRecord {
     _recommendScore = castToType<int>(snapshotData['recommendScore']);
     _wellnessScore = castToType<int>(snapshotData['wellnessScore']);
     _npsDone = snapshotData['nps_done'] as bool?;
+    _isWeatherSever = snapshotData['isWeatherSever'] as bool?;
     _lastLogin = snapshotData['lastLogin'] as DateTime?;
   }
 
@@ -142,6 +148,7 @@ Map<String, dynamic> createUsersRecordData({
   int? recommendScore,
   int? wellnessScore,
   bool? npsDone,
+  bool? isWeatherSever,
   DateTime? lastLogin,
 }) {
   final firestoreData = mapToFirestore(
@@ -158,6 +165,7 @@ Map<String, dynamic> createUsersRecordData({
       'recommendScore': recommendScore,
       'wellnessScore': wellnessScore,
       'nps_done': npsDone,
+      'isWeatherSever': isWeatherSever,
       'lastLogin': lastLogin,
     }.withoutNulls,
   );
@@ -182,6 +190,7 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.recommendScore == e2?.recommendScore &&
         e1?.wellnessScore == e2?.wellnessScore &&
         e1?.npsDone == e2?.npsDone &&
+        e1?.isWeatherSever == e2?.isWeatherSever &&
         e1?.lastLogin == e2?.lastLogin;
   }
 
@@ -199,6 +208,7 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.recommendScore,
         e?.wellnessScore,
         e?.npsDone,
+        e?.isWeatherSever,
         e?.lastLogin
       ]);
 

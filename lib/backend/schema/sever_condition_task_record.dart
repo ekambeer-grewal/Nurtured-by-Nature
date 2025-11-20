@@ -7,7 +7,6 @@ import '/backend/schema/util/firestore_util.dart';
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
-/// task for sever conditions
 class SeverConditionTaskRecord extends FirestoreRecord {
   SeverConditionTaskRecord._(
     DocumentReference reference,
