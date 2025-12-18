@@ -589,12 +589,22 @@ class _LoginpageWidgetState extends State<LoginpageWidget> {
                                         SeverWeatherTaskCall.condition(
                                       (_model.apiResult?.jsonBody ?? ''),
                                     )!;
+                                    FFAppState().windSpeed =
+                                        SeverWeatherTaskCall.windSpeed(
+                                      (_model.apiResult?.jsonBody ?? ''),
+                                    )!;
+                                    FFAppState().temperature =
+                                        SeverWeatherTaskCall.temperature(
+                                      (_model.apiResult?.jsonBody ?? ''),
+                                    )!;
                                     safeSetState(() {});
                                     if (valueOrDefault<bool>(
                                             currentUserDocument?.isWeatherSever,
                                             false) &&
-                                        functions.isNotRain(FFAppState()
-                                            .cityWeatherCondition)!) {
+                                        functions.notUsingSeverTask(
+                                            FFAppState().cityWeatherCondition,
+                                            FFAppState().windSpeed,
+                                            FFAppState().temperature)!) {
                                       logFirebaseEvent('Login_firestore_query');
                                       _model.taskList =
                                           await queryTasksRecordOnce();
@@ -684,8 +694,10 @@ class _LoginpageWidgetState extends State<LoginpageWidget> {
                                           .update(createUsersRecordData(
                                         isWeatherSever: false,
                                       ));
-                                    } else if (!functions.isNotRain(FFAppState()
-                                            .cityWeatherCondition)! &&
+                                    } else if (!functions.notUsingSeverTask(
+                                            FFAppState().cityWeatherCondition,
+                                            FFAppState().windSpeed,
+                                            FFAppState().temperature)! &&
                                         !valueOrDefault<bool>(
                                             currentUserDocument?.isWeatherSever,
                                             false)) {
@@ -963,78 +975,24 @@ class _LoginpageWidgetState extends State<LoginpageWidget> {
                                           currentUserDocument?.city, ''),
                                     );
 
-                                    logFirebaseEvent(
-                                        'IconButton_show_snack_bar');
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          'here',
-                                          style: TextStyle(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                          ),
-                                        ),
-                                        duration: Duration(milliseconds: 4000),
-                                        backgroundColor:
-                                            FlutterFlowTheme.of(context)
-                                                .secondary,
-                                      ),
-                                    );
                                     if ((_model.apiResultGoogle?.succeeded ??
                                         true)) {
-                                      logFirebaseEvent(
-                                          'IconButton_show_snack_bar');
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            'app',
-                                            style: TextStyle(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                            ),
-                                          ),
-                                          duration:
-                                              Duration(milliseconds: 4000),
-                                          backgroundColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondary,
-                                        ),
-                                      );
                                       logFirebaseEvent(
                                           'IconButton_update_app_state');
                                       FFAppState().cityWeatherCondition =
                                           SeverWeatherTaskCall.condition(
-                                        (_model.apiResult?.jsonBody ?? ''),
+                                        (_model.apiResultGoogle?.jsonBody ??
+                                            ''),
                                       )!;
                                       safeSetState(() {});
                                       if (valueOrDefault<bool>(
                                               currentUserDocument
                                                   ?.isWeatherSever,
                                               false) &&
-                                          functions.isNotRain(FFAppState()
-                                              .cityWeatherCondition)!) {
-                                        logFirebaseEvent(
-                                            'IconButton_show_snack_bar');
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                              'if',
-                                              style: TextStyle(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                              ),
-                                            ),
-                                            duration:
-                                                Duration(milliseconds: 4000),
-                                            backgroundColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondary,
-                                          ),
-                                        );
+                                          functions.notUsingSeverTask(
+                                              FFAppState().cityWeatherCondition,
+                                              FFAppState().windSpeed,
+                                              FFAppState().temperature)!) {
                                         logFirebaseEvent(
                                             'IconButton_firestore_query');
                                         _model.taskListgoogle =
@@ -1133,33 +1091,14 @@ class _LoginpageWidgetState extends State<LoginpageWidget> {
                                             .update(createUsersRecordData(
                                           isWeatherSever: false,
                                         ));
-                                      } else if (!functions.isNotRain(
-                                              FFAppState()
-                                                  .cityWeatherCondition)! &&
+                                      } else if (!functions.notUsingSeverTask(
+                                              FFAppState().cityWeatherCondition,
+                                              FFAppState().windSpeed,
+                                              FFAppState().temperature)! &&
                                           !valueOrDefault<bool>(
                                               currentUserDocument
                                                   ?.isWeatherSever,
                                               false)) {
-                                        logFirebaseEvent(
-                                            'IconButton_show_snack_bar');
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                              'ifelse',
-                                              style: TextStyle(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                              ),
-                                            ),
-                                            duration:
-                                                Duration(milliseconds: 4000),
-                                            backgroundColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondary,
-                                          ),
-                                        );
                                         logFirebaseEvent(
                                             'IconButton_firestore_query');
                                         _model.taskListSevergoogle =
@@ -1250,8 +1189,8 @@ class _LoginpageWidgetState extends State<LoginpageWidget> {
                                         FFAppState().IsComplete3 = _model
                                             .userTaskSeverListGoogle!
                                             .isComplete3;
-                                        FFAppState().TaskRef1 =
-                                            _model.userTaskSeverList?.reference;
+                                        FFAppState().TaskRef1 = _model
+                                            .userTaskSeverListGoogle?.reference;
                                         FFAppState().TaskRef2 = _model
                                             .userTaskSeverListGoogle?.reference;
                                         FFAppState().TaskRef3 = _model
@@ -1265,26 +1204,6 @@ class _LoginpageWidgetState extends State<LoginpageWidget> {
                                           isWeatherSever: true,
                                         ));
                                       } else {
-                                        logFirebaseEvent(
-                                            'IconButton_show_snack_bar');
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                              'else',
-                                              style: TextStyle(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                              ),
-                                            ),
-                                            duration:
-                                                Duration(milliseconds: 4000),
-                                            backgroundColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondary,
-                                          ),
-                                        );
                                         logFirebaseEvent(
                                             'IconButton_firestore_query');
                                         _model.userTaskListgoogle2 =

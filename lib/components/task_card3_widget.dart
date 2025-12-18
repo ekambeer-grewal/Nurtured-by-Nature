@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/components/questions_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -5,19 +6,19 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'task_card_model.dart';
-export 'task_card_model.dart';
+import 'task_card3_model.dart';
+export 'task_card3_model.dart';
 
 /// Task card that shows task with a checkmark button
-class TaskCardWidget extends StatefulWidget {
-  const TaskCardWidget({super.key});
+class TaskCard3Widget extends StatefulWidget {
+  const TaskCard3Widget({super.key});
 
   @override
-  State<TaskCardWidget> createState() => _TaskCardWidgetState();
+  State<TaskCard3Widget> createState() => _TaskCard3WidgetState();
 }
 
-class _TaskCardWidgetState extends State<TaskCardWidget> {
-  late TaskCardModel _model;
+class _TaskCard3WidgetState extends State<TaskCard3Widget> {
+  late TaskCard3Model _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -28,7 +29,7 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => TaskCardModel());
+    _model = createModel(context, () => TaskCard3Model());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -62,7 +63,7 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
         borderRadius: BorderRadius.circular(24.0),
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+        padding: EdgeInsetsDirectional.fromSTEB(0.0, 25.0, 0.0, 0.0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -70,23 +71,20 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
             Container(
               height: 100.0,
               decoration: BoxDecoration(),
-              child: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(
-                  FFAppState().TaskText1,
-                  style: FlutterFlowTheme.of(context).bodyLarge.override(
-                        font: GoogleFonts.inter(
-                          fontWeight: FontWeight.w600,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyLarge.fontStyle,
-                        ),
-                        color: Colors.black,
-                        letterSpacing: 0.0,
+              child: Text(
+                FFAppState().TaskText3,
+                style: FlutterFlowTheme.of(context).bodyLarge.override(
+                      font: GoogleFonts.inter(
                         fontWeight: FontWeight.w600,
                         fontStyle:
                             FlutterFlowTheme.of(context).bodyLarge.fontStyle,
                       ),
-                ),
+                      color: Colors.black,
+                      letterSpacing: 0.0,
+                      fontWeight: FontWeight.w600,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+                    ),
               ),
             ),
             Padding(
@@ -125,23 +123,35 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
                       ),
                       child: Checkbox(
                         value: _model.checkboxValue ??=
-                            FFAppState().IsComplete1,
+                            FFAppState().IsComplete3,
                         onChanged: (newValue) async {
                           safeSetState(() => _model.checkboxValue = newValue!);
                           if (newValue!) {
                             logFirebaseEvent(
-                                'TASK_CARD_Checkbox_b59kguua_ON_TOGGLE_ON');
+                                'TASK_CARD3_Checkbox_vee4wrib_ON_TOGGLE_O');
                             logFirebaseEvent('Checkbox_google_analytics_event');
                             logFirebaseEvent('nature_task_complete_right');
                             logFirebaseEvent('Checkbox_backend_call');
 
                             await FFAppState()
-                                .TaskRef1!
+                                .TaskRef3!
                                 .update(createUserTasksRecordData(
-                                  isComplete1: true,
+                                  isComplete3: true,
                                 ));
                             logFirebaseEvent('Checkbox_update_app_state');
-                            FFAppState().IsComplete1 = true;
+                            FFAppState().IsComplete3 = true;
+                            safeSetState(() {});
+                            logFirebaseEvent('Checkbox_backend_call');
+                            _model.funFactResponse =
+                                await GenerateNatureFactCall.call(
+                              taskName: FFAppState().TaskText3,
+                            );
+
+                            logFirebaseEvent('Checkbox_update_app_state');
+                            FFAppState().funFact =
+                                GenerateNatureFactCall.funFact(
+                              (_model.funFactResponse?.jsonBody ?? ''),
+                            )!;
                             safeSetState(() {});
                             logFirebaseEvent('Checkbox_bottom_sheet');
                             await showModalBottomSheet(
@@ -156,18 +166,55 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
                                 );
                               },
                             ).then((value) => safeSetState(() {}));
+
+                            logFirebaseEvent('Checkbox_show_snack_bar');
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  FFAppState().funFact,
+                                  style: FlutterFlowTheme.of(context)
+                                      .displaySmall
+                                      .override(
+                                        font: GoogleFonts.interTight(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .displaySmall
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .displaySmall
+                                                  .fontStyle,
+                                        ),
+                                        color: Color(0xFF192022),
+                                        fontSize: 15.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .displaySmall
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .displaySmall
+                                            .fontStyle,
+                                      ),
+                                ),
+                                duration: Duration(milliseconds: 10000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).secondary,
+                              ),
+                            );
+
+                            safeSetState(() {});
                           } else {
                             logFirebaseEvent(
-                                'TASK_CARD_Checkbox_b59kguua_ON_TOGGLE_OF');
+                                'TASK_CARD3_Checkbox_vee4wrib_ON_TOGGLE_O');
                             logFirebaseEvent('Checkbox_backend_call');
 
                             await FFAppState()
-                                .TaskRef1!
+                                .TaskRef3!
                                 .update(createUserTasksRecordData(
-                                  isComplete1: false,
+                                  isComplete3: false,
                                 ));
                             logFirebaseEvent('Checkbox_update_app_state');
-                            FFAppState().IsComplete1 = false;
+                            FFAppState().IsComplete3 = false;
                             safeSetState(() {});
                           }
                         },

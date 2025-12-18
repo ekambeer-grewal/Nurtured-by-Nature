@@ -1,3 +1,5 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -300,6 +302,16 @@ class _QuestionsWidgetState extends State<QuestionsWidget> {
               child: FFButtonWidget(
                 onPressed: () async {
                   logFirebaseEvent('QUESTIONS_COMPLETE_CHECK_IN_BTN_ON_TAP');
+                  logFirebaseEvent('Button_backend_call');
+
+                  await currentUserReference!.update({
+                    ...mapToFirestore(
+                      {
+                        'userCheckInResponse': FieldValue.arrayUnion(
+                            [_model.detailsTextController.text]),
+                      },
+                    ),
+                  });
                   logFirebaseEvent('Button_bottom_sheet');
                   Navigator.pop(context);
                 },

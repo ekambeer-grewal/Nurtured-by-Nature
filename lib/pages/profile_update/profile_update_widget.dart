@@ -1,5 +1,4 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -7,42 +6,41 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
-import '/flutter_flow/custom_functions.dart' as functions;
-import '/flutter_flow/random_data_util.dart' as random_data;
 import '/index.dart';
-import 'package:collection/collection.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'onboarding_model.dart';
-export 'onboarding_model.dart';
+import 'profile_update_model.dart';
+export 'profile_update_model.dart';
 
-class OnboardingWidget extends StatefulWidget {
-  const OnboardingWidget({super.key});
+class ProfileUpdateWidget extends StatefulWidget {
+  const ProfileUpdateWidget({super.key});
 
-  static String routeName = 'onboarding';
-  static String routePath = '/onboarding';
+  static String routeName = 'profileUpdate';
+  static String routePath = '/profileUpdate';
 
   @override
-  State<OnboardingWidget> createState() => _OnboardingWidgetState();
+  State<ProfileUpdateWidget> createState() => _ProfileUpdateWidgetState();
 }
 
-class _OnboardingWidgetState extends State<OnboardingWidget> {
-  late OnboardingModel _model;
+class _ProfileUpdateWidgetState extends State<ProfileUpdateWidget> {
+  late ProfileUpdateModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => OnboardingModel());
+    _model = createModel(context, () => ProfileUpdateModel());
 
-    logFirebaseEvent('screen_view', parameters: {'screen_name': 'onboarding'});
-    _model.nameTextController ??= TextEditingController();
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'profileUpdate'});
+    _model.nameTextController ??=
+        TextEditingController(text: currentUserDisplayName);
     _model.nameFocusNode ??= FocusNode();
 
-    _model.cityTextController ??= TextEditingController();
+    _model.cityTextController ??= TextEditingController(
+        text: valueOrDefault(currentUserDocument?.city, ''));
     _model.cityFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -57,8 +55,6 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -98,7 +94,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                         ),
                         onPressed: () async {
                           logFirebaseEvent(
-                              'ONBOARDING_PAGE_NavigateBack_ON_TAP');
+                              'PROFILE_UPDATE_PAGE_NavigateBack_ON_TAP');
                           logFirebaseEvent('NavigateBack_navigate_back');
                           context.safePop();
                         },
@@ -166,7 +162,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                               highlightColor: Colors.transparent,
                               onTap: () async {
                                 logFirebaseEvent(
-                                    'ONBOARDING_PAGE_ProfilePicStack_ON_TAP');
+                                    'PROFILE_UPDATE_ProfilePicStack_ON_TAP');
                                 logFirebaseEvent(
                                     'ProfilePicStack_upload_media_to_firebase');
                                 final selectedMedia =
@@ -179,8 +175,8 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                     selectedMedia.every((m) =>
                                         validateFileFormat(
                                             m.storagePath, context))) {
-                                  safeSetState(() =>
-                                      _model.isDataUploading_profilePic = true);
+                                  safeSetState(() => _model
+                                      .isDataUploading_updateProfphoto = true);
                                   var selectedUploadedFiles =
                                       <FFUploadedFile>[];
 
@@ -209,16 +205,17 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                         .map((u) => u!)
                                         .toList();
                                   } finally {
-                                    _model.isDataUploading_profilePic = false;
+                                    _model.isDataUploading_updateProfphoto =
+                                        false;
                                   }
                                   if (selectedUploadedFiles.length ==
                                           selectedMedia.length &&
                                       downloadUrls.length ==
                                           selectedMedia.length) {
                                     safeSetState(() {
-                                      _model.uploadedLocalFile_profilePic =
+                                      _model.uploadedLocalFile_updateProfphoto =
                                           selectedUploadedFiles.first;
-                                      _model.uploadedFileUrl_profilePic =
+                                      _model.uploadedFileUrl_updateProfphoto =
                                           downloadUrls.first;
                                     });
                                   } else {
@@ -232,7 +229,8 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
 
                                 await currentUserReference!
                                     .update(createUsersRecordData(
-                                  photoUrl: _model.uploadedFileUrl_profilePic,
+                                  photoUrl:
+                                      _model.uploadedFileUrl_updateProfphoto,
                                 ));
                               },
                               child: Stack(
@@ -249,7 +247,8 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                         image: DecorationImage(
                                           fit: BoxFit.contain,
                                           image: Image.network(
-                                            _model.uploadedFileUrl_profilePic,
+                                            _model
+                                                .uploadedFileUrl_updateProfphoto,
                                           ).image,
                                         ),
                                         borderRadius:
@@ -282,7 +281,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                           Padding(
                             padding: EdgeInsets.all(24.0),
                             child: Text(
-                              'Account Setup',
+                              'Update Profile',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -312,14 +311,170 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 12.0, 0.0, 12.0),
-                              child: Container(
+                              child: AuthUserStreamWidget(
+                                builder: (context) => Container(
+                                  width: 200.0,
+                                  child: TextFormField(
+                                    controller: _model.nameTextController,
+                                    focusNode: _model.nameFocusNode,
+                                    onChanged: (_) => EasyDebounce.debounce(
+                                      '_model.nameTextController',
+                                      Duration(milliseconds: 2000),
+                                      () => safeSetState(() {}),
+                                    ),
+                                    autofocus: false,
+                                    enabled: true,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      isDense: true,
+                                      labelText: 'Name',
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            font: GoogleFonts.inter(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontStyle,
+                                            ),
+                                            color: Color(0xFF3A7349),
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontStyle,
+                                          ),
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            font: GoogleFonts.inter(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontStyle,
+                                            ),
+                                            color: Color(0xFF3A7349),
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontStyle,
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.black,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      filled: true,
+                                      fillColor: Color(0xFFBEAA7D),
+                                      suffixIcon: _model.nameTextController!
+                                              .text.isNotEmpty
+                                          ? InkWell(
+                                              onTap: () async {
+                                                _model.nameTextController
+                                                    ?.clear();
+                                                safeSetState(() {});
+                                              },
+                                              child: Icon(
+                                                Icons.clear,
+                                                color: Color(0xFF3A7349),
+                                                size: 22,
+                                              ),
+                                            )
+                                          : null,
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          font: GoogleFonts.istokWeb(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                          color: Color(0xFF14181B),
+                                          letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                    keyboardType: TextInputType.name,
+                                    cursorColor: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    enableInteractiveSelection: true,
+                                    validator: _model
+                                        .nameTextControllerValidator
+                                        .asValidator(context),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Form(
+                            key: _model.formKey1,
+                            autovalidateMode: AutovalidateMode.disabled,
+                            child: AuthUserStreamWidget(
+                              builder: (context) => Container(
                                 width: 200.0,
                                 child: TextFormField(
-                                  key: ValueKey('Name_0sqg'),
-                                  controller: _model.nameTextController,
-                                  focusNode: _model.nameFocusNode,
+                                  controller: _model.cityTextController,
+                                  focusNode: _model.cityFocusNode,
                                   onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.nameTextController',
+                                    '_model.cityTextController',
                                     Duration(milliseconds: 2000),
                                     () => safeSetState(() {}),
                                   ),
@@ -328,7 +483,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     isDense: true,
-                                    labelText: 'Name',
+                                    labelText: 'City',
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -410,10 +565,10 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                     filled: true,
                                     fillColor: Color(0xFFBEAA7D),
                                     suffixIcon: _model
-                                            .nameTextController!.text.isNotEmpty
+                                            .cityTextController!.text.isNotEmpty
                                         ? InkWell(
                                             onTap: () async {
-                                              _model.nameTextController
+                                              _model.cityTextController
                                                   ?.clear();
                                               safeSetState(() {});
                                             },
@@ -447,149 +602,11 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                             .bodyMedium
                                             .fontStyle,
                                       ),
-                                  keyboardType: TextInputType.name,
-                                  cursorColor:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                  cursorColor: Color(0xFF14181B),
                                   enableInteractiveSelection: true,
-                                  validator: _model.nameTextControllerValidator
+                                  validator: _model.cityTextControllerValidator
                                       .asValidator(context),
                                 ),
-                              ),
-                            ),
-                          ),
-                          Form(
-                            key: _model.formKey1,
-                            autovalidateMode: AutovalidateMode.disabled,
-                            child: Container(
-                              width: 200.0,
-                              child: TextFormField(
-                                key: ValueKey('City_vyce'),
-                                controller: _model.cityTextController,
-                                focusNode: _model.cityFocusNode,
-                                onChanged: (_) => EasyDebounce.debounce(
-                                  '_model.cityTextController',
-                                  Duration(milliseconds: 2000),
-                                  () => safeSetState(() {}),
-                                ),
-                                autofocus: false,
-                                enabled: true,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  isDense: true,
-                                  labelText: 'City',
-                                  labelStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontStyle,
-                                        ),
-                                        color: Color(0xFF3A7349),
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontStyle,
-                                      ),
-                                  hintStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontStyle,
-                                        ),
-                                        color: Color(0xFF3A7349),
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontStyle,
-                                      ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.black,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  filled: true,
-                                  fillColor: Color(0xFFBEAA7D),
-                                  suffixIcon: _model
-                                          .cityTextController!.text.isNotEmpty
-                                      ? InkWell(
-                                          onTap: () async {
-                                            _model.cityTextController?.clear();
-                                            safeSetState(() {});
-                                          },
-                                          child: Icon(
-                                            Icons.clear,
-                                            color: Color(0xFF3A7349),
-                                            size: 22,
-                                          ),
-                                        )
-                                      : null,
-                                ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      font: GoogleFonts.istokWeb(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                      color: Color(0xFF14181B),
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                cursorColor: Color(0xFF14181B),
-                                enableInteractiveSelection: true,
-                                validator: _model.cityTextControllerValidator
-                                    .asValidator(context),
                               ),
                             ),
                           ),
@@ -597,10 +614,9 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 70.0, 0.0, 0.0),
                             child: FFButtonWidget(
-                              key: ValueKey('CreateAcc_q1vo'),
                               onPressed: () async {
                                 logFirebaseEvent(
-                                    'ONBOARDING_PAGE_CreateAcc_ON_TAP');
+                                    'PROFILE_UPDATE_PAGE_CreateAcc_ON_TAP');
                                 logFirebaseEvent('CreateAcc_backend_call');
 
                                 await currentUserReference!
@@ -608,185 +624,11 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                   displayName: _model.nameTextController.text,
                                   city: _model.cityTextController.text,
                                 ));
-                                logFirebaseEvent('CreateAcc_firestore_query');
-                                _model.taskList = await queryTasksRecordOnce(
-                                  limit: 7,
-                                );
-                                // RandomIndex1
-                                logFirebaseEvent('CreateAcc_RandomIndex1');
-                                _model.randomInt1 =
-                                    random_data.randomInteger(0, 6);
-                                safeSetState(() {});
-                                // RandomIndex2
-                                logFirebaseEvent('CreateAcc_RandomIndex2');
-                                _model.randomInt2 =
-                                    random_data.randomInteger(0, 6);
-                                safeSetState(() {});
-                                // RandomIndex3
-                                logFirebaseEvent('CreateAcc_RandomIndex3');
-                                _model.randomInt3 =
-                                    random_data.randomInteger(0, 6);
-                                safeSetState(() {});
-                                while ((_model.randomInt1 ==
-                                        _model.randomInt2) ||
-                                    (_model.randomInt3 == _model.randomInt2)) {
-                                  // RandomIndex2
-                                  logFirebaseEvent('CreateAcc_RandomIndex2');
-                                  _model.randomInt2 =
-                                      random_data.randomInteger(0, 6);
-                                  safeSetState(() {});
-                                }
-                                while ((_model.randomInt1 ==
-                                        _model.randomInt3) ||
-                                    (_model.randomInt2 == _model.randomInt3)) {
-                                  // RandomIndex3
-                                  logFirebaseEvent('CreateAcc_RandomIndex3');
-                                  _model.randomInt3 =
-                                      random_data.randomInteger(0, 10);
-                                  safeSetState(() {});
-                                }
-                                logFirebaseEvent('CreateAcc_backend_call');
-                                _model.cityWeather =
-                                    await SeverWeatherTaskCall.call(
-                                  cityName: valueOrDefault(
-                                      currentUserDocument?.city, ''),
-                                );
-
-                                if ((_model.cityWeather?.succeeded ?? true)) {
-                                  logFirebaseEvent(
-                                      'CreateAcc_update_app_state');
-                                  FFAppState().cityWeatherCondition =
-                                      SeverWeatherTaskCall.condition(
-                                    (_model.cityWeather?.jsonBody ?? ''),
-                                  )!;
-                                  FFAppState().windSpeed =
-                                      SeverWeatherTaskCall.windSpeed(
-                                    (_model.cityWeather?.jsonBody ?? ''),
-                                  )!;
-                                  FFAppState().temperature =
-                                      SeverWeatherTaskCall.temperature(
-                                    (_model.cityWeather?.jsonBody ?? ''),
-                                  )!;
-                                  safeSetState(() {});
-                                } else {
-                                  logFirebaseEvent('CreateAcc_show_snack_bar');
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        'Error No Value for condition for this city',
-                                        style: TextStyle(
-                                          color: Color(0xFFF2260A),
-                                        ),
-                                      ),
-                                      duration: Duration(milliseconds: 4650),
-                                      backgroundColor: Color(0xFFF9D3D3),
-                                    ),
-                                  );
-                                }
-
-                                if (functions.notUsingSeverTask(
-                                    FFAppState().cityWeatherCondition,
-                                    FFAppState().windSpeed,
-                                    FFAppState().temperature)!) {
-                                  logFirebaseEvent(
-                                      'CreateAcc_update_page_state');
-                                  _model.textTask1 = _model.taskList!
-                                      .elementAtOrNull(_model.randomInt1!)!
-                                      .text;
-                                  _model.textTask2 = _model.taskList!
-                                      .elementAtOrNull(_model.randomInt2!)!
-                                      .text;
-                                  _model.textTask3 = _model.taskList!
-                                      .elementAtOrNull(_model.randomInt3!)!
-                                      .text;
-                                  safeSetState(() {});
-                                  logFirebaseEvent('CreateAcc_backend_call');
-
-                                  await currentUserReference!
-                                      .update(createUsersRecordData(
-                                    isWeatherSever: false,
-                                  ));
-                                } else {
-                                  logFirebaseEvent('CreateAcc_firestore_query');
-                                  _model.severWeatherTaskList =
-                                      await querySeverConditionTaskRecordOnce(
-                                    limit: 7,
-                                  );
-                                  logFirebaseEvent(
-                                      'CreateAcc_update_page_state');
-                                  _model.textTask1 = _model
-                                      .severWeatherTaskList!
-                                      .elementAtOrNull(_model.randomInt1!)!
-                                      .task;
-                                  _model.textTask2 = _model
-                                      .severWeatherTaskList!
-                                      .elementAtOrNull(_model.randomInt2!)!
-                                      .task;
-                                  _model.textTask3 = _model
-                                      .severWeatherTaskList!
-                                      .elementAtOrNull(_model.randomInt3!)!
-                                      .task;
-                                  safeSetState(() {});
-                                  logFirebaseEvent('CreateAcc_backend_call');
-
-                                  await currentUserReference!
-                                      .update(createUsersRecordData(
-                                    isWeatherSever: true,
-                                  ));
-                                }
-
-                                logFirebaseEvent('CreateAcc_backend_call');
-
-                                var userTasksRecordReference =
-                                    UserTasksRecord.createDoc(
-                                        currentUserReference!);
-                                await userTasksRecordReference
-                                    .set(createUserTasksRecordData(
-                                  task1: _model.textTask1,
-                                  isComplete1: false,
-                                  task2: _model.textTask2,
-                                  task3: _model.textTask3,
-                                  isComplete2: false,
-                                  isComplete3: false,
-                                ));
-                                _model.userTaskList =
-                                    UserTasksRecord.getDocumentFromData(
-                                        createUserTasksRecordData(
-                                          task1: _model.textTask1,
-                                          isComplete1: false,
-                                          task2: _model.textTask2,
-                                          task3: _model.textTask3,
-                                          isComplete2: false,
-                                          isComplete3: false,
-                                        ),
-                                        userTasksRecordReference);
-                                logFirebaseEvent('CreateAcc_update_app_state');
-                                FFAppState().TaskText1 =
-                                    _model.userTaskList!.task1;
-                                FFAppState().IsComplete1 =
-                                    _model.userTaskList!.isComplete1;
-                                FFAppState().TaskText2 =
-                                    _model.userTaskList!.task2;
-                                FFAppState().Iscomplete2 =
-                                    _model.userTaskList!.isComplete2;
-                                FFAppState().TaskText3 =
-                                    _model.userTaskList!.task3;
-                                FFAppState().IsComplete3 =
-                                    _model.userTaskList!.isComplete3;
-                                FFAppState().TaskRef1 =
-                                    _model.userTaskList?.reference;
-                                FFAppState().TaskRef2 =
-                                    _model.userTaskList?.reference;
-                                FFAppState().TaskRef3 =
-                                    _model.userTaskList?.reference;
-                                safeSetState(() {});
                                 logFirebaseEvent('CreateAcc_navigate_to');
 
                                 context.goNamed(GoldenPageWidget.routeName);
-
-                                safeSetState(() {});
                               },
-                              text: 'Create Account',
+                              text: 'Update',
                               options: FFButtonOptions(
                                 height: 40.0,
                                 padding: EdgeInsetsDirectional.fromSTEB(

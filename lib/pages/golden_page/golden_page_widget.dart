@@ -1,14 +1,16 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
+import '/components/advisory_banner_widget.dart';
 import '/components/popup_survey_widget.dart';
 import '/components/task1_detail_widget.dart';
 import '/components/task2_detail_widget.dart';
+import '/components/task_card2_widget.dart';
+import '/components/task_card_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/pages/task_card/task_card_widget.dart';
-import '/pages/task_card2/task_card2_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/flutter_flow/random_data_util.dart' as random_data;
 import '/index.dart';
@@ -49,7 +51,9 @@ class _GoldenPageWidgetState extends State<GoldenPageWidget> {
           FFAppState().Iscomplete2 &&
           FFAppState().IsComplete3) {
         logFirebaseEvent('GoldenPage_firestore_query');
-        _model.taskList = await queryTasksRecordOnce();
+        _model.taskList = await queryTasksRecordOnce(
+          limit: 7,
+        );
         // RandomIndex1
         logFirebaseEvent('GoldenPage_RandomIndex1');
         _model.randomIndex1 = random_data.randomInteger(0, 6);
@@ -93,15 +97,15 @@ class _GoldenPageWidgetState extends State<GoldenPageWidget> {
         ));
         logFirebaseEvent('GoldenPage_update_app_state');
         FFAppState().TaskText1 = _model.userTaskList!.task1;
-        FFAppState().IsComplete1 = _model.userTaskList!.isComplete1;
+        FFAppState().IsComplete1 = false;
         FFAppState().TaskText2 = _model.userTaskList!.task2;
-        FFAppState().Iscomplete2 = _model.userTaskList!.isComplete2;
+        FFAppState().Iscomplete2 = false;
         FFAppState().TaskText3 = _model.userTaskList!.task3;
-        FFAppState().IsComplete3 = _model.userTaskList!.isComplete3;
+        FFAppState().IsComplete3 = false;
         FFAppState().TaskRef1 = _model.userTaskList?.reference;
         FFAppState().TaskRef2 = _model.userTaskList?.reference;
         FFAppState().TaskRef3 = _model.userTaskList?.reference;
-        safeSetState(() {});
+        FFAppState().update(() {});
       }
       if ((valueOrDefault(currentUserDocument?.logincount, 0) >= 3) &&
           !valueOrDefault<bool>(currentUserDocument?.npsDone, false)) {
@@ -124,6 +128,23 @@ class _GoldenPageWidgetState extends State<GoldenPageWidget> {
             );
           },
         ).then((value) => safeSetState(() {}));
+      }
+      logFirebaseEvent('GoldenPage_backend_call');
+      _model.cityWeather = await SeverWeatherTaskCall.call(
+        cityName: valueOrDefault(currentUserDocument?.city, ''),
+      );
+
+      if ((_model.cityWeather?.succeeded ?? true)) {
+        logFirebaseEvent('GoldenPage_update_app_state');
+        FFAppState().cityWeatherCondition = SeverWeatherTaskCall.condition(
+          (_model.cityWeather?.jsonBody ?? ''),
+        )!;
+        safeSetState(() {});
+      }
+      if (functions.isWeatherAdvisory(FFAppState().cityWeatherCondition)!) {
+        logFirebaseEvent('GoldenPage_update_app_state');
+        FFAppState().showBanner = true;
+        safeSetState(() {});
       }
     });
 
@@ -149,18 +170,6 @@ class _GoldenPageWidgetState extends State<GoldenPageWidget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            print('FloatingActionButton pressed ...');
-          },
-          backgroundColor: Colors.white,
-          elevation: 8.0,
-          child: FaIcon(
-            FontAwesomeIcons.robot,
-            color: Colors.black,
-            size: 24.0,
-          ),
-        ),
         drawer: Container(
           width: MediaQuery.sizeOf(context).width * 0.55,
           child: Drawer(
@@ -234,10 +243,13 @@ class _GoldenPageWidgetState extends State<GoldenPageWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                       child: FFButtonWidget(
-                        onPressed: () {
-                          print('About pressed ...');
+                        onPressed: () async {
+                          logFirebaseEvent('GOLDEN_PAGE_PAGE_About_ON_TAP');
+                          logFirebaseEvent('About_navigate_to');
+
+                          context.pushNamed(TermsAndPrivacyWidget.routeName);
                         },
-                        text: 'About the App',
+                        text: 'About Nurtured',
                         options: FFButtonOptions(
                           height: 50.0,
                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -278,10 +290,13 @@ class _GoldenPageWidgetState extends State<GoldenPageWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                       child: FFButtonWidget(
-                        onPressed: () {
-                          print('Privacy pressed ...');
+                        onPressed: () async {
+                          logFirebaseEvent('GOLDEN_PAGE_PAGE_Privacy_ON_TAP');
+                          logFirebaseEvent('Privacy_navigate_to');
+
+                          context.pushNamed(GetSupportWidget.routeName);
                         },
-                        text: 'Privacy Policy & Terms',
+                        text: 'Get Support',
                         options: FFButtonOptions(
                           height: 50.0,
                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -322,10 +337,13 @@ class _GoldenPageWidgetState extends State<GoldenPageWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                       child: FFButtonWidget(
-                        onPressed: () {
-                          print('Contact pressed ...');
+                        onPressed: () async {
+                          logFirebaseEvent('GOLDEN_PAGE_PAGE_Contact_ON_TAP');
+                          logFirebaseEvent('Contact_navigate_to');
+
+                          context.pushNamed(ContactUsWidget.routeName);
                         },
-                        text: 'Contact / Feedback',
+                        text: 'Contact Us',
                         options: FFButtonOptions(
                           height: 50.0,
                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -425,495 +443,594 @@ class _GoldenPageWidgetState extends State<GoldenPageWidget> {
             decoration: BoxDecoration(
               color: Color(0xFFE4EDDB),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Stack(
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(20.0, 26.0, 20.0, 0.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          FlutterFlowIconButton(
-                            borderRadius: 8.0,
-                            buttonSize: 50.0,
-                            icon: FaIcon(
-                              FontAwesomeIcons.bars,
-                              color: Colors.black,
-                              size: 24.0,
-                            ),
-                            onPressed: () async {
-                              logFirebaseEvent('GOLDEN_PAGE_PAGE_Menu_ON_TAP');
-                              logFirebaseEvent('Menu_drawer');
-                              scaffoldKey.currentState!.openDrawer();
-                            },
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                8.0, 0.0, 0.0, 8.0),
-                            child: AuthUserStreamWidget(
-                              builder: (context) => Container(
-                                width: 50.0,
-                                height: 50.0,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  image: DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: Image.network(
-                                      currentUserPhoto,
-                                    ).image,
-                                  ),
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Color(0xFF13171A),
-                                    width: 1.0,
-                                  ),
-                                ),
+            child: SingleChildScrollView(
+              primary: false,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Stack(
+                    children: [
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            20.0, 26.0, 20.0, 0.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            FlutterFlowIconButton(
+                              borderRadius: 8.0,
+                              buttonSize: 50.0,
+                              icon: FaIcon(
+                                FontAwesomeIcons.bars,
+                                color: Colors.black,
+                                size: 24.0,
                               ),
+                              onPressed: () async {
+                                logFirebaseEvent(
+                                    'GOLDEN_PAGE_PAGE_Menu_ON_TAP');
+                                logFirebaseEvent('Menu_drawer');
+                                scaffoldKey.currentState!.openDrawer();
+                              },
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
-                      child: Stack(
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                12.0, 50.0, 12.0, 0.0),
-                            child: Container(
-                              width: double.infinity,
-                              height: 650.0,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFF7F9F5),
-                                borderRadius: BorderRadius.circular(24.0),
-                              ),
-                            ),
-                          ),
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Container(
-                                width: 140.0,
-                                height: 140.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  image: DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: Image.asset(
-                                      'assets/images/Screenshot_2025-10-19_at_9.02.30_PM.png',
-                                    ).image,
-                                  ),
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    width: 2.0,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 12.0, 0.0, 12.0),
-                                child: Text(
-                                  'Let’s take your daily moment of nature.',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        color: Colors.black,
-                                        fontSize: 16.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  8.0, 0.0, 0.0, 8.0),
+                              child: AuthUserStreamWidget(
+                                builder: (context) => InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    logFirebaseEvent(
+                                        'GOLDEN_PAGE_PAGE_ProfilePic_ON_TAP');
+                                    logFirebaseEvent('ProfilePic_navigate_to');
+
+                                    context.pushNamed(
+                                        ProfileUpdateWidget.routeName);
+                                  },
+                                  child: Container(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: Image.network(
+                                          currentUserPhoto,
+                                        ).image,
                                       ),
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: Color(0xFF13171A),
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                              Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      50.0, 0.0, 50.0, 0.0),
-                                  child: AuthUserStreamWidget(
-                                    builder: (context) => Text(
-                                      'Good Morning, ${currentUserDisplayName}',
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
+                        child: Stack(
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  12.0, 50.0, 12.0, 0.0),
+                              child: Container(
+                                width: double.infinity,
+                                height: 650.0,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFF7F9F5),
+                                  borderRadius: BorderRadius.circular(24.0),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: AlignmentDirectional(0.0, -0.46),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Container(
+                                    width: 140.0,
+                                    height: 140.0,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: Image.asset(
+                                          'assets/images/Screenshot_2025-10-19_at_9.02.30_PM.png',
+                                        ).image,
+                                      ),
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 12.0, 0.0, 12.0),
+                                    child: Text(
+                                      'Let’s take your daily moment of nature.',
                                       style: FlutterFlowTheme.of(context)
-                                          .headlineMedium
+                                          .bodyMedium
                                           .override(
-                                            font: GoogleFonts.interTight(
+                                            font: GoogleFonts.inter(
                                               fontWeight:
                                                   FlutterFlowTheme.of(context)
-                                                      .headlineMedium
+                                                      .bodyMedium
                                                       .fontWeight,
                                               fontStyle:
                                                   FlutterFlowTheme.of(context)
-                                                      .headlineMedium
+                                                      .bodyMedium
                                                       .fontStyle,
                                             ),
                                             color: Colors.black,
+                                            fontSize: 16.0,
                                             letterSpacing: 0.0,
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
-                                                    .headlineMedium
+                                                    .bodyMedium
                                                     .fontWeight,
                                             fontStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .headlineMedium
+                                                    .bodyMedium
                                                     .fontStyle,
                                           ),
                                     ),
                                   ),
-                                ),
-                              ),
-                              Container(
-                                width: 340.0,
-                                height: 280.0,
-                                child: Stack(
-                                  children: [
-                                    Padding(
+                                  Align(
+                                    alignment: AlignmentDirectional(0.0, 0.0),
+                                    child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 12.0, 0.0, 0.0),
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: 290.0,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFF7F9F5),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 7.0,
-                                              color: Color(0x33000000),
-                                              offset: Offset(
-                                                0.0,
-                                                4.0,
+                                          50.0, 0.0, 50.0, 0.0),
+                                      child: AuthUserStreamWidget(
+                                        builder: (context) => Text(
+                                          'Good Morning, ${currentUserDisplayName}',
+                                          style: FlutterFlowTheme.of(context)
+                                              .headlineMedium
+                                              .override(
+                                                font: GoogleFonts.interTight(
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .headlineMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .headlineMedium
+                                                          .fontStyle,
+                                                ),
+                                                color: Colors.black,
+                                                letterSpacing: 0.0,
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineMedium
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineMedium
+                                                        .fontStyle,
                                               ),
-                                              spreadRadius: 2.0,
-                                            )
-                                          ],
-                                          borderRadius:
-                                              BorderRadius.circular(24.0),
                                         ),
                                       ),
                                     ),
-                                    Column(
-                                      mainAxisSize: MainAxisSize.max,
+                                  ),
+                                  Container(
+                                    width: 340.0,
+                                    height: 280.0,
+                                    child: Stack(
                                       children: [
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  34.0, 24.0, 34.0, 0.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                'Daily Task',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      font:
-                                                          GoogleFonts.istokWeb(
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                      ),
+                                                  0.0, 12.0, 0.0, 0.0),
+                                          child: Container(
+                                            width: double.infinity,
+                                            height: 290.0,
+                                            decoration: BoxDecoration(
+                                              color: Color(0xFFF7F9F5),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 7.0,
+                                                  color: Color(0x33000000),
+                                                  offset: Offset(
+                                                    0.0,
+                                                    4.0,
+                                                  ),
+                                                  spreadRadius: 2.0,
+                                                )
+                                              ],
+                                              borderRadius:
+                                                  BorderRadius.circular(24.0),
+                                            ),
+                                          ),
+                                        ),
+                                        Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      34.0, 24.0, 34.0, 0.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    'Daily Task',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          font: GoogleFonts
+                                                              .istokWeb(
+                                                            fontWeight:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                          ),
+                                                          color: Colors.black,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontStyle,
+                                                        ),
+                                                  ),
+                                                  FlutterFlowIconButton(
+                                                    borderRadius: 8.0,
+                                                    buttonSize: 60.0,
+                                                    icon: Icon(
+                                                      Icons.arrow_right_alt,
                                                       color: Colors.black,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .fontWeight,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .fontStyle,
+                                                      size: 40.0,
                                                     ),
-                                              ),
-                                              FlutterFlowIconButton(
-                                                borderRadius: 8.0,
-                                                buttonSize: 60.0,
-                                                icon: Icon(
-                                                  Icons.arrow_right_alt,
-                                                  color: Colors.black,
-                                                  size: 40.0,
-                                                ),
-                                                onPressed: () async {
-                                                  logFirebaseEvent(
-                                                      'GOLDEN_PAGE_PAGE_ArrowBtn_ON_TAP');
-                                                  logFirebaseEvent(
-                                                      'ArrowBtn_google_analytics_event');
-                                                  logFirebaseEvent(
-                                                      'daily_task_open_button');
-                                                  logFirebaseEvent(
-                                                      'ArrowBtn_navigate_to');
+                                                    onPressed: () async {
+                                                      logFirebaseEvent(
+                                                          'GOLDEN_PAGE_PAGE_ArrowBtn_ON_TAP');
+                                                      logFirebaseEvent(
+                                                          'ArrowBtn_google_analytics_event');
+                                                      logFirebaseEvent(
+                                                          'daily_task_open_button');
+                                                      logFirebaseEvent(
+                                                          'ArrowBtn_navigate_to');
 
-                                                  context.pushNamed(
-                                                      WeeklyTasksWidget
-                                                          .routeName);
-                                                },
+                                                      context.pushNamed(
+                                                          WeeklyTasksWidget
+                                                              .routeName);
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Container(
+                                              height: 185.0,
+                                              decoration: BoxDecoration(),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 0.0, 15.0),
+                                                child: ListView(
+                                                  padding: EdgeInsets.zero,
+                                                  shrinkWrap: true,
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  children: [
+                                                    InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        logFirebaseEvent(
+                                                            'GOLDEN_Container_nalhhmn9_ON_TAP');
+                                                        logFirebaseEvent(
+                                                            'TaskCard_bottom_sheet');
+                                                        await showModalBottomSheet(
+                                                          isScrollControlled:
+                                                              true,
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          enableDrag: false,
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return GestureDetector(
+                                                              onTap: () {
+                                                                FocusScope.of(
+                                                                        context)
+                                                                    .unfocus();
+                                                                FocusManager
+                                                                    .instance
+                                                                    .primaryFocus
+                                                                    ?.unfocus();
+                                                              },
+                                                              child: Padding(
+                                                                padding: MediaQuery
+                                                                    .viewInsetsOf(
+                                                                        context),
+                                                                child:
+                                                                    Task1DetailWidget(),
+                                                              ),
+                                                            );
+                                                          },
+                                                        ).then((value) =>
+                                                            safeSetState(
+                                                                () {}));
+                                                      },
+                                                      child: wrapWithModel(
+                                                        model: _model
+                                                            .taskCardModel,
+                                                        updateCallback: () =>
+                                                            safeSetState(() {}),
+                                                        updateOnChange: true,
+                                                        child: TaskCardWidget(),
+                                                      ),
+                                                    ),
+                                                    InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        logFirebaseEvent(
+                                                            'GOLDEN_Container_lb16rpp3_ON_TAP');
+                                                        logFirebaseEvent(
+                                                            'TaskCard2_bottom_sheet');
+                                                        await showModalBottomSheet(
+                                                          isScrollControlled:
+                                                              true,
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          enableDrag: false,
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return GestureDetector(
+                                                              onTap: () {
+                                                                FocusScope.of(
+                                                                        context)
+                                                                    .unfocus();
+                                                                FocusManager
+                                                                    .instance
+                                                                    .primaryFocus
+                                                                    ?.unfocus();
+                                                              },
+                                                              child: Padding(
+                                                                padding: MediaQuery
+                                                                    .viewInsetsOf(
+                                                                        context),
+                                                                child:
+                                                                    Task2DetailWidget(),
+                                                              ),
+                                                            );
+                                                          },
+                                                        ).then((value) =>
+                                                            safeSetState(
+                                                                () {}));
+                                                      },
+                                                      child: wrapWithModel(
+                                                        model: _model
+                                                            .taskCard2Model,
+                                                        updateCallback: () =>
+                                                            safeSetState(() {}),
+                                                        child: TaskCard2Widget(
+                                                          taskText: _model
+                                                              .randomTask2
+                                                              ?.text,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ].divide(
+                                                      SizedBox(width: 12.0)),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Stack(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            24.0, 24.0, 24.0, 0.0),
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: 109.0,
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFFF7F9F5),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                blurRadius: 7.0,
+                                                color: Color(0x33000000),
+                                                offset: Offset(
+                                                  0.0,
+                                                  4.0,
+                                                ),
+                                                spreadRadius: 2.0,
+                                              )
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(24.0),
+                                          ),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Align(
+                                                alignment: AlignmentDirectional(
+                                                    -1.0, -1.0),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          24.0, 5.0, 0.0, 0.0),
+                                                  child: Text(
+                                                    'Streak',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          font: GoogleFonts
+                                                              .istokWeb(
+                                                            fontWeight:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                          ),
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontStyle,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                children: [
+                                                  Container(
+                                                    width: 70.0,
+                                                    height: 70.0,
+                                                    decoration: BoxDecoration(
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                      image: DecorationImage(
+                                                        fit: BoxFit.cover,
+                                                        image: Image.asset(
+                                                          'assets/images/360_F_338928104_6b4Nhr5PxIIVc1RxB8zCP9YWw8kgqnEm.jpg',
+                                                        ).image,
+                                                      ),
+                                                      shape: BoxShape.circle,
+                                                      border: Border.all(
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  AuthUserStreamWidget(
+                                                    builder: (context) => Text(
+                                                      functions
+                                                          .streaklogic(
+                                                              valueOrDefault(
+                                                                  currentUserDocument
+                                                                      ?.streakCount,
+                                                                  0),
+                                                              currentUserDocument
+                                                                  ?.lastLogin)
+                                                          .toString(),
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            font: GoogleFonts
+                                                                .istokWeb(
+                                                              fontWeight:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontWeight,
+                                                              fontStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
+                                                            ),
+                                                            color: Colors.black,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),
                                         ),
-                                        Container(
-                                          height: 185.0,
-                                          decoration: BoxDecoration(),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 15.0),
-                                            child: ListView(
-                                              padding: EdgeInsets.zero,
-                                              shrinkWrap: true,
-                                              scrollDirection: Axis.horizontal,
-                                              children: [
-                                                InkWell(
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  focusColor:
-                                                      Colors.transparent,
-                                                  hoverColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  onTap: () async {
-                                                    logFirebaseEvent(
-                                                        'GOLDEN_Container_nalhhmn9_ON_TAP');
-                                                    logFirebaseEvent(
-                                                        'TaskCard_bottom_sheet');
-                                                    await showModalBottomSheet(
-                                                      isScrollControlled: true,
-                                                      backgroundColor:
-                                                          Colors.transparent,
-                                                      enableDrag: false,
-                                                      context: context,
-                                                      builder: (context) {
-                                                        return GestureDetector(
-                                                          onTap: () {
-                                                            FocusScope.of(
-                                                                    context)
-                                                                .unfocus();
-                                                            FocusManager
-                                                                .instance
-                                                                .primaryFocus
-                                                                ?.unfocus();
-                                                          },
-                                                          child: Padding(
-                                                            padding: MediaQuery
-                                                                .viewInsetsOf(
-                                                                    context),
-                                                            child:
-                                                                Task1DetailWidget(),
-                                                          ),
-                                                        );
-                                                      },
-                                                    ).then((value) =>
-                                                        safeSetState(() {}));
-                                                  },
-                                                  child: wrapWithModel(
-                                                    model: _model.taskCardModel,
-                                                    updateCallback: () =>
-                                                        safeSetState(() {}),
-                                                    updateOnChange: true,
-                                                    child: TaskCardWidget(),
-                                                  ),
-                                                ),
-                                                InkWell(
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  focusColor:
-                                                      Colors.transparent,
-                                                  hoverColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  onTap: () async {
-                                                    logFirebaseEvent(
-                                                        'GOLDEN_Container_lb16rpp3_ON_TAP');
-                                                    logFirebaseEvent(
-                                                        'TaskCard2_bottom_sheet');
-                                                    await showModalBottomSheet(
-                                                      isScrollControlled: true,
-                                                      backgroundColor:
-                                                          Colors.transparent,
-                                                      enableDrag: false,
-                                                      context: context,
-                                                      builder: (context) {
-                                                        return GestureDetector(
-                                                          onTap: () {
-                                                            FocusScope.of(
-                                                                    context)
-                                                                .unfocus();
-                                                            FocusManager
-                                                                .instance
-                                                                .primaryFocus
-                                                                ?.unfocus();
-                                                          },
-                                                          child: Padding(
-                                                            padding: MediaQuery
-                                                                .viewInsetsOf(
-                                                                    context),
-                                                            child:
-                                                                Task2DetailWidget(),
-                                                          ),
-                                                        );
-                                                      },
-                                                    ).then((value) =>
-                                                        safeSetState(() {}));
-                                                  },
-                                                  child: wrapWithModel(
-                                                    model:
-                                                        _model.taskCard2Model,
-                                                    updateCallback: () =>
-                                                        safeSetState(() {}),
-                                                    child: TaskCard2Widget(
-                                                      taskText: _model
-                                                          .randomTask2?.text,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ].divide(SizedBox(width: 12.0)),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Stack(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        24.0, 24.0, 24.0, 0.0),
-                                    child: Container(
-                                      width: double.infinity,
-                                      height: 109.0,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFF7F9F5),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            blurRadius: 7.0,
-                                            color: Color(0x33000000),
-                                            offset: Offset(
-                                              0.0,
-                                              4.0,
-                                            ),
-                                            spreadRadius: 2.0,
-                                          )
-                                        ],
-                                        borderRadius:
-                                            BorderRadius.circular(24.0),
                                       ),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Container(
-                                            width: 70.0,
-                                            height: 70.0,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                              image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: Image.asset(
-                                                  'assets/images/360_F_338928104_6b4Nhr5PxIIVc1RxB8zCP9YWw8kgqnEm.jpg',
-                                                ).image,
-                                              ),
-                                              shape: BoxShape.circle,
-                                              border: Border.all(
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ),
-                                          AuthUserStreamWidget(
-                                            builder: (context) => Text(
-                                              functions
-                                                  .streaklogic(
-                                                      valueOrDefault(
-                                                          currentUserDocument
-                                                              ?.streakCount,
-                                                          0),
-                                                      currentUserDocument
-                                                          ?.lastLogin)
-                                                  .toString(),
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    font: GoogleFonts.istokWeb(
-                                                      fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .fontWeight,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .fontStyle,
-                                                    ),
-                                                    color: Colors.black,
-                                                    letterSpacing: 0.0,
-                                                    fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
-                                                  ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                        ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ].divide(SizedBox(height: 1.0)),
+                      if (FFAppState().showBanner == true)
+                        Align(
+                          alignment: AlignmentDirectional(0.0, -1.0),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 50.0, 0.0, 0.0),
+                            child: wrapWithModel(
+                              model: _model.advisoryBannerModel,
+                              updateCallback: () => safeSetState(() {}),
+                              updateOnChange: true,
+                              child: AdvisoryBannerWidget(),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ].divide(SizedBox(height: 1.0)),
+              ),
             ),
           ),
         ),

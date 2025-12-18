@@ -63,74 +63,80 @@ class _Task1DetailWidgetState extends State<Task1DetailWidget> {
         ),
         child: Padding(
           padding: EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Task',
-                    style: FlutterFlowTheme.of(context).headlineSmall.override(
-                          font: GoogleFonts.interTight(
+          child: SingleChildScrollView(
+            primary: false,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Task',
+                      style:
+                          FlutterFlowTheme.of(context).headlineSmall.override(
+                                font: GoogleFonts.interTight(
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .headlineSmall
+                                      .fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .headlineSmall
+                                      .fontStyle,
+                                ),
+                                color: Color(0xFF14181B),
+                                letterSpacing: 0.0,
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .headlineSmall
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .headlineSmall
+                                    .fontStyle,
+                              ),
+                    ),
+                    FlutterFlowIconButton(
+                      borderColor: Colors.transparent,
+                      borderRadius: 16.0,
+                      buttonSize: 32.0,
+                      icon: Icon(
+                        Icons.close,
+                        color: FlutterFlowTheme.of(context).secondaryText,
+                        size: 20.0,
+                      ),
+                      onPressed: () async {
+                        logFirebaseEvent('TASK1_DETAIL_COMP_close_ICN_ON_TAP');
+                        logFirebaseEvent('IconButton_bottom_sheet');
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.all(24.0),
+                  child: Text(
+                    FFAppState().TaskText1,
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          font: GoogleFonts.istokWeb(
                             fontWeight: FlutterFlowTheme.of(context)
-                                .headlineSmall
+                                .bodyMedium
                                 .fontWeight,
                             fontStyle: FlutterFlowTheme.of(context)
-                                .headlineSmall
+                                .bodyMedium
                                 .fontStyle,
                           ),
                           color: Color(0xFF14181B),
                           letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .headlineSmall
-                              .fontWeight,
-                          fontStyle: FlutterFlowTheme.of(context)
-                              .headlineSmall
-                              .fontStyle,
-                        ),
-                  ),
-                  FlutterFlowIconButton(
-                    borderColor: Colors.transparent,
-                    borderRadius: 16.0,
-                    buttonSize: 32.0,
-                    icon: Icon(
-                      Icons.close,
-                      color: FlutterFlowTheme.of(context).secondaryText,
-                      size: 20.0,
-                    ),
-                    onPressed: () async {
-                      logFirebaseEvent('TASK1_DETAIL_COMP_close_ICN_ON_TAP');
-                      logFirebaseEvent('IconButton_bottom_sheet');
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.all(24.0),
-                child: Text(
-                  FFAppState().TaskText1,
-                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        font: GoogleFonts.istokWeb(
                           fontWeight: FlutterFlowTheme.of(context)
                               .bodyMedium
                               .fontWeight,
                           fontStyle:
                               FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                         ),
-                        color: Color(0xFF14181B),
-                        letterSpacing: 0.0,
-                        fontWeight:
-                            FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                      ),
+                  ),
                 ),
-              ),
-            ].divide(SizedBox(height: 50.0)),
+              ].divide(SizedBox(height: 50.0)),
+            ),
           ),
         ),
       ),

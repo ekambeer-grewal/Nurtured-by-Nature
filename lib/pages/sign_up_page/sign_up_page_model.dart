@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 class SignUpPageModel extends FlutterFlowModel<SignUpPageWidget> {
   ///  Local state fields for this page.
 
-  int randomIndex1 = 0;
+  int? randomIndex1;
 
-  int randomIndex2 = 0;
+  int? randomIndex2;
 
-  int randomIndex3 = 0;
+  int? randomIndex3;
 
   String? taskText1;
 

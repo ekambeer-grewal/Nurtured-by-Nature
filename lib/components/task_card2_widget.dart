@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/components/questions_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -148,6 +149,18 @@ class _TaskCard2WidgetState extends State<TaskCard2Widget> {
                             logFirebaseEvent('Checkbox_update_app_state');
                             FFAppState().Iscomplete2 = true;
                             safeSetState(() {});
+                            logFirebaseEvent('Checkbox_backend_call');
+                            _model.funFactResponse =
+                                await GenerateNatureFactCall.call(
+                              taskName: FFAppState().TaskText2,
+                            );
+
+                            logFirebaseEvent('Checkbox_update_app_state');
+                            FFAppState().funFact =
+                                GenerateNatureFactCall.funFact(
+                              (_model.funFactResponse?.jsonBody ?? ''),
+                            )!;
+                            safeSetState(() {});
                             logFirebaseEvent('Checkbox_bottom_sheet');
                             await showModalBottomSheet(
                               isScrollControlled: true,
@@ -161,6 +174,43 @@ class _TaskCard2WidgetState extends State<TaskCard2Widget> {
                                 );
                               },
                             ).then((value) => safeSetState(() {}));
+
+                            logFirebaseEvent('Checkbox_show_snack_bar');
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  FFAppState().funFact,
+                                  style: FlutterFlowTheme.of(context)
+                                      .displaySmall
+                                      .override(
+                                        font: GoogleFonts.interTight(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .displaySmall
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .displaySmall
+                                                  .fontStyle,
+                                        ),
+                                        color: Color(0xFF192022),
+                                        fontSize: 15.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .displaySmall
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .displaySmall
+                                            .fontStyle,
+                                      ),
+                                ),
+                                duration: Duration(milliseconds: 10000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).secondary,
+                              ),
+                            );
+
+                            safeSetState(() {});
                           } else {
                             logFirebaseEvent(
                                 'TASK_CARD2_Checkbox_0btl7zi3_ON_TOGGLE_O');

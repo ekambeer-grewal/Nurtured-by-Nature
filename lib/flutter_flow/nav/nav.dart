@@ -88,19 +88,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
               : SplashPageWidget(),
         ),
         FFRoute(
-          name: SplashPageWidget.routeName,
-          path: SplashPageWidget.routePath,
-          builder: (context, params) => SplashPageWidget(),
-        ),
-        FFRoute(
           name: WeeklyTasksWidget.routeName,
           path: WeeklyTasksWidget.routePath,
           builder: (context, params) => WeeklyTasksWidget(),
         ),
         FFRoute(
-          name: OnboardingWidget.routeName,
-          path: OnboardingWidget.routePath,
-          builder: (context, params) => OnboardingWidget(),
+          name: SignUpPageWidget.routeName,
+          path: SignUpPageWidget.routePath,
+          builder: (context, params) => SignUpPageWidget(),
         ),
         FFRoute(
           name: LoginpageWidget.routeName,
@@ -108,9 +103,34 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
           builder: (context, params) => LoginpageWidget(),
         ),
         FFRoute(
-          name: SignUpPageWidget.routeName,
-          path: SignUpPageWidget.routePath,
-          builder: (context, params) => SignUpPageWidget(),
+          name: SplashPageWidget.routeName,
+          path: SplashPageWidget.routePath,
+          builder: (context, params) => SplashPageWidget(),
+        ),
+        FFRoute(
+          name: GetSupportWidget.routeName,
+          path: GetSupportWidget.routePath,
+          builder: (context, params) => GetSupportWidget(),
+        ),
+        FFRoute(
+          name: ContactUsWidget.routeName,
+          path: ContactUsWidget.routePath,
+          builder: (context, params) => ContactUsWidget(),
+        ),
+        FFRoute(
+          name: OnboardingWidget.routeName,
+          path: OnboardingWidget.routePath,
+          builder: (context, params) => OnboardingWidget(),
+        ),
+        FFRoute(
+          name: ProfileUpdateWidget.routeName,
+          path: ProfileUpdateWidget.routePath,
+          builder: (context, params) => ProfileUpdateWidget(),
+        ),
+        FFRoute(
+          name: TermsAndPrivacyWidget.routeName,
+          path: TermsAndPrivacyWidget.routePath,
+          builder: (context, params) => TermsAndPrivacyWidget(),
         ),
         FFRoute(
           name: GoldenPageWidget.routeName,

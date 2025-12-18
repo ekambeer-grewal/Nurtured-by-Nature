@@ -34,6 +34,55 @@ class SeverWeatherTaskCall {
         response,
         r'''$.weather[:].main''',
       ));
+  static double? windSpeed(dynamic response) => castToType<double>(getJsonField(
+        response,
+        r'''$.wind.speed''',
+      ));
+  static double? temperature(dynamic response) =>
+      castToType<double>(getJsonField(
+        response,
+        r'''$.main.temp''',
+      ));
+}
+
+class GenerateNatureFactCall {
+  static Future<ApiCallResponse> call({
+    String? taskName = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "contents": [
+    {
+      "parts": [
+        {
+          "text": "Generate a single short, engaging fun fact (1-2 sentences) about the health or wellness benefit of this nature activity: ${escapeStringForJson(taskName)}. Make it encouraging and science-based. Only provide the fun fact, no additional text."
+        }
+      ]
+    }
+  ]
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'generateNatureFact',
+      apiUrl:
+          'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=AIzaSyBBQ2PsJen21c-6TZGibcZL92NmjBpXY4M',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static String? funFact(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.candidates[:].content.parts[:].text''',
+      ));
 }
 
 class ApiPagingParams {
@@ -81,4 +130,15 @@ String _serializeJson(dynamic jsonVar, [bool isList = false]) {
     }
     return isList ? '[]' : '{}';
   }
+}
+
+String? escapeStringForJson(String? input) {
+  if (input == null) {
+    return null;
+  }
+  return input
+      .replaceAll('\\', '\\\\')
+      .replaceAll('"', '\\"')
+      .replaceAll('\n', '\\n')
+      .replaceAll('\t', '\\t');
 }

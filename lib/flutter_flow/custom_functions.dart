@@ -12,11 +12,6 @@ import '/backend/backend.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '/auth/firebase_auth/auth_util.dart';
 
-bool? isNotRain(String weatherCondition) {
-  // Normalize the input to lowercase and check for 'rain'
-  return !weatherCondition.toLowerCase().contains("rain");
-}
-
 int? streaklogic(
   int? streakCount,
   DateTime? dateTime,
@@ -38,4 +33,64 @@ int? streaklogic(
   }
 
   return streakCount; // Return the updated streakCount
+}
+
+bool? notUsingSeverTask(
+  String weatherCondition,
+  double windSpeed,
+  double temperature,
+) {
+  if (weatherCondition.toLowerCase().contains("rain") ||
+      weatherCondition.toLowerCase().contains("snow") ||
+      temperature <= 45 ||
+      windSpeed >= 20) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+bool? isWeatherAdvisory(String weatherCondition) {
+  if (weatherCondition.isEmpty) {
+    return false;
+  }
+
+  final condition = weatherCondition.toLowerCase();
+
+  // Severe advisory keywords (OpenWeatherMap)
+  final advisoryKeywords = [
+    "thunderstorm",
+    "tornado",
+    "hurricane",
+    "tropical storm",
+    "extreme",
+    "heat",
+    "hot",
+    "cold",
+    "freezing",
+    "snow",
+    "blizzard",
+    "heavy snow",
+    "heavy rain",
+    "rainstorm",
+    "storm",
+    "squall",
+    "gale",
+    "wind",
+    "strong wind",
+    "fog",
+    "dense fog",
+    "ash",
+    "dust",
+    "smoke"
+  ];
+
+  // If weatherCondition contains ANY advisory keyword → return true
+  for (final keyword in advisoryKeywords) {
+    if (condition.contains(keyword)) {
+      return true;
+    }
+  }
+
+  return false;
 }

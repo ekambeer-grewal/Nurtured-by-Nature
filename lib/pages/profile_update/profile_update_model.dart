@@ -1,11 +1,9 @@
-import '/backend/api_requests/api_calls.dart';
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
-import 'onboarding_widget.dart' show OnboardingWidget;
+import 'profile_update_widget.dart' show ProfileUpdateWidget;
 import 'package:flutter/material.dart';
 
-class OnboardingModel extends FlutterFlowModel<OnboardingWidget> {
+class ProfileUpdateModel extends FlutterFlowModel<ProfileUpdateWidget> {
   ///  Local state fields for this page.
 
   int? randomInt1;
@@ -24,10 +22,10 @@ class OnboardingModel extends FlutterFlowModel<OnboardingWidget> {
 
   final formKey2 = GlobalKey<FormState>();
   final formKey1 = GlobalKey<FormState>();
-  bool isDataUploading_profilePic = false;
-  FFUploadedFile uploadedLocalFile_profilePic =
+  bool isDataUploading_updateProfphoto = false;
+  FFUploadedFile uploadedLocalFile_updateProfphoto =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
-  String uploadedFileUrl_profilePic = '';
+  String uploadedFileUrl_updateProfphoto = '';
 
   // State field(s) for Name widget.
   FocusNode? nameFocusNode;
@@ -52,15 +50,6 @@ class OnboardingModel extends FlutterFlowModel<OnboardingWidget> {
 
     return null;
   }
-
-  // Stores action output result for [Firestore Query - Query a collection] action in CreateAcc widget.
-  List<TasksRecord>? taskList;
-  // Stores action output result for [Backend Call - API (SeverWeatherTask)] action in CreateAcc widget.
-  ApiCallResponse? cityWeather;
-  // Stores action output result for [Firestore Query - Query a collection] action in CreateAcc widget.
-  List<SeverConditionTaskRecord>? severWeatherTaskList;
-  // Stores action output result for [Backend Call - Create Document] action in CreateAcc widget.
-  UserTasksRecord? userTaskList;
 
   @override
   void initState(BuildContext context) {
