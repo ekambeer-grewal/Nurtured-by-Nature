@@ -48,6 +48,15 @@ class FFAppState extends ChangeNotifier {
       _cityWeatherCondition =
           prefs.getString('ff_cityWeatherCondition') ?? _cityWeatherCondition;
     });
+    _safeInit(() {
+      _windSpeed = prefs.getDouble('ff_windSpeed') ?? _windSpeed;
+    });
+    _safeInit(() {
+      _temperature = prefs.getDouble('ff_temperature') ?? _temperature;
+    });
+    _safeInit(() {
+      _funFact = prefs.getString('ff_funFact') ?? _funFact;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -132,6 +141,34 @@ class FFAppState extends ChangeNotifier {
   set cityWeatherCondition(String value) {
     _cityWeatherCondition = value;
     prefs.setString('ff_cityWeatherCondition', value);
+  }
+
+  double _windSpeed = 0.0;
+  double get windSpeed => _windSpeed;
+  set windSpeed(double value) {
+    _windSpeed = value;
+    prefs.setDouble('ff_windSpeed', value);
+  }
+
+  double _temperature = 0.0;
+  double get temperature => _temperature;
+  set temperature(double value) {
+    _temperature = value;
+    prefs.setDouble('ff_temperature', value);
+  }
+
+  /// Show advisory banner
+  bool _showBanner = false;
+  bool get showBanner => _showBanner;
+  set showBanner(bool value) {
+    _showBanner = value;
+  }
+
+  String _funFact = '';
+  String get funFact => _funFact;
+  set funFact(String value) {
+    _funFact = value;
+    prefs.setString('ff_funFact', value);
   }
 }
 

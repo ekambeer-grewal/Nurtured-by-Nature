@@ -1,4 +1,3 @@
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'sign_up_page_widget.dart' show SignUpPageWidget;
@@ -7,11 +6,11 @@ import 'package:flutter/material.dart';
 class SignUpPageModel extends FlutterFlowModel<SignUpPageWidget> {
   ///  Local state fields for this page.
 
-  int randomIndex1 = 0;
+  int? randomIndex1;
 
-  int randomIndex2 = 0;
+  int? randomIndex2;
 
-  int randomIndex3 = 0;
+  int? randomIndex3;
 
   String? taskText1;
 
@@ -36,10 +35,6 @@ class SignUpPageModel extends FlutterFlowModel<SignUpPageWidget> {
   late bool confirmPasswordVisibility;
   String? Function(BuildContext, String?)?
       confirmPasswordTextControllerValidator;
-  // Stores action output result for [Firestore Query - Query a collection] action in IconButton widget.
-  List<TasksRecord>? taskListGoogle;
-  // Stores action output result for [Backend Call - Create Document] action in IconButton widget.
-  UserTasksRecord? userTaskListGoogle;
 
   @override
   void initState(BuildContext context) {

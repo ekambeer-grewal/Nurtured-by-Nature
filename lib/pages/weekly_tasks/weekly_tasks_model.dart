@@ -1,7 +1,7 @@
+import '/components/task_card2_widget.dart';
+import '/components/task_card3_widget.dart';
+import '/components/task_card_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/pages/task_card/task_card_widget.dart';
-import '/pages/task_card2/task_card2_widget.dart';
-import '/pages/task_card3/task_card3_widget.dart';
 import '/index.dart';
 import 'weekly_tasks_widget.dart' show WeeklyTasksWidget;
 import 'package:flutter/material.dart';

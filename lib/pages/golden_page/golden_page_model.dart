@@ -1,7 +1,9 @@
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
+import '/components/advisory_banner_widget.dart';
+import '/components/task_card2_widget.dart';
+import '/components/task_card_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/pages/task_card/task_card_widget.dart';
-import '/pages/task_card2/task_card2_widget.dart';
 import '/index.dart';
 import 'golden_page_widget.dart' show GoldenPageWidget;
 import 'package:flutter/material.dart';
@@ -33,20 +35,26 @@ class GoldenPageModel extends FlutterFlowModel<GoldenPageWidget> {
   List<TasksRecord>? taskList;
   // Stores action output result for [Firestore Query - Query a collection] action in GoldenPage widget.
   UserTasksRecord? userTaskList;
+  // Stores action output result for [Backend Call - API (SeverWeatherTask)] action in GoldenPage widget.
+  ApiCallResponse? cityWeather;
   // Model for TaskCard component.
   late TaskCardModel taskCardModel;
   // Model for TaskCard2 component.
   late TaskCard2Model taskCard2Model;
+  // Model for AdvisoryBanner component.
+  late AdvisoryBannerModel advisoryBannerModel;
 
   @override
   void initState(BuildContext context) {
     taskCardModel = createModel(context, () => TaskCardModel());
     taskCard2Model = createModel(context, () => TaskCard2Model());
+    advisoryBannerModel = createModel(context, () => AdvisoryBannerModel());
   }
 
   @override
   void dispose() {
     taskCardModel.dispose();
     taskCard2Model.dispose();
+    advisoryBannerModel.dispose();
   }
 }

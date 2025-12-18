@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -85,6 +86,16 @@ class UsersRecord extends FirestoreRecord {
   DateTime? get lastLogin => _lastLogin;
   bool hasLastLogin() => _lastLogin != null;
 
+  // "streakCount" field.
+  int? _streakCount;
+  int get streakCount => _streakCount ?? 0;
+  bool hasStreakCount() => _streakCount != null;
+
+  // "userCheckInResponse" field.
+  List<String>? _userCheckInResponse;
+  List<String> get userCheckInResponse => _userCheckInResponse ?? const [];
+  bool hasUserCheckInResponse() => _userCheckInResponse != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -100,6 +111,8 @@ class UsersRecord extends FirestoreRecord {
     _npsDone = snapshotData['nps_done'] as bool?;
     _isWeatherSever = snapshotData['isWeatherSever'] as bool?;
     _lastLogin = snapshotData['lastLogin'] as DateTime?;
+    _streakCount = castToType<int>(snapshotData['streakCount']);
+    _userCheckInResponse = getDataList(snapshotData['userCheckInResponse']);
   }
 
   static CollectionReference get collection =>
@@ -150,6 +163,7 @@ Map<String, dynamic> createUsersRecordData({
   bool? npsDone,
   bool? isWeatherSever,
   DateTime? lastLogin,
+  int? streakCount,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -167,6 +181,7 @@ Map<String, dynamic> createUsersRecordData({
       'nps_done': npsDone,
       'isWeatherSever': isWeatherSever,
       'lastLogin': lastLogin,
+      'streakCount': streakCount,
     }.withoutNulls,
   );
 
@@ -178,6 +193,7 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
 
   @override
   bool equals(UsersRecord? e1, UsersRecord? e2) {
+    const listEquality = ListEquality();
     return e1?.email == e2?.email &&
         e1?.displayName == e2?.displayName &&
         e1?.photoUrl == e2?.photoUrl &&
@@ -191,7 +207,9 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.wellnessScore == e2?.wellnessScore &&
         e1?.npsDone == e2?.npsDone &&
         e1?.isWeatherSever == e2?.isWeatherSever &&
-        e1?.lastLogin == e2?.lastLogin;
+        e1?.lastLogin == e2?.lastLogin &&
+        e1?.streakCount == e2?.streakCount &&
+        listEquality.equals(e1?.userCheckInResponse, e2?.userCheckInResponse);
   }
 
   @override
@@ -209,7 +227,9 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.wellnessScore,
         e?.npsDone,
         e?.isWeatherSever,
-        e?.lastLogin
+        e?.lastLogin,
+        e?.streakCount,
+        e?.userCheckInResponse
       ]);
 
   @override

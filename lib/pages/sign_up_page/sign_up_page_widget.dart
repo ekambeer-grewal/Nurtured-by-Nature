@@ -4,9 +4,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/random_data_util.dart' as random_data;
 import '/index.dart';
-import 'package:collection/collection.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -825,116 +823,11 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                         ),
                                       });
                                       logFirebaseEvent(
-                                          'IconButton_firestore_query');
-                                      _model.taskListGoogle =
-                                          await queryTasksRecordOnce(
-                                        limit: 3,
-                                      );
-                                      // RandomIndex1
-                                      logFirebaseEvent(
-                                          'IconButton_RandomIndex1');
-                                      _model.randomIndex1 =
-                                          random_data.randomInteger(0, 2);
-                                      safeSetState(() {});
-                                      // RandomIndex2
-                                      logFirebaseEvent(
-                                          'IconButton_RandomIndex2');
-                                      _model.randomIndex2 =
-                                          random_data.randomInteger(0, 2);
-                                      safeSetState(() {});
-                                      // RandomIndex3
-                                      logFirebaseEvent(
-                                          'IconButton_RandomIndex3');
-                                      _model.randomIndex3 =
-                                          random_data.randomInteger(0, 2);
-                                      safeSetState(() {});
-                                      while ((_model.randomIndex1 ==
-                                              _model.randomIndex2) ||
-                                          (_model.randomIndex3 ==
-                                              _model.randomIndex2)) {
-                                        // RandomIndex2
-                                        logFirebaseEvent(
-                                            'IconButton_RandomIndex2');
-                                        _model.randomIndex2 = 0;
-                                        safeSetState(() {});
-                                      }
-                                      while ((_model.randomIndex1 ==
-                                              _model.randomIndex3) ||
-                                          (_model.randomIndex2 ==
-                                              _model.randomIndex3)) {
-                                        // RandomIndex3
-                                        logFirebaseEvent(
-                                            'IconButton_RandomIndex3');
-                                        _model.randomIndex3 = 0;
-                                        safeSetState(() {});
-                                      }
-                                      logFirebaseEvent(
-                                          'IconButton_update_page_state');
-                                      _model.taskText1 = _model.taskListGoogle
-                                          ?.elementAtOrNull(_model.randomIndex1)
-                                          ?.text;
-                                      _model.taskText2 = _model.taskListGoogle
-                                          ?.elementAtOrNull(_model.randomIndex2)
-                                          ?.text;
-                                      _model.taskText3 = _model.taskListGoogle
-                                          ?.elementAtOrNull(_model.randomIndex3)
-                                          ?.text;
-                                      safeSetState(() {});
-                                      logFirebaseEvent(
-                                          'IconButton_backend_call');
-
-                                      var userTasksRecordReference =
-                                          UserTasksRecord.createDoc(
-                                              currentUserReference!);
-                                      await userTasksRecordReference
-                                          .set(createUserTasksRecordData(
-                                        task1: _model.taskText1,
-                                        isComplete1: false,
-                                        task2: _model.taskText2,
-                                        task3: _model.taskText3,
-                                        isComplete2: false,
-                                        isComplete3: false,
-                                      ));
-                                      _model.userTaskListGoogle =
-                                          UserTasksRecord.getDocumentFromData(
-                                              createUserTasksRecordData(
-                                                task1: _model.taskText1,
-                                                isComplete1: false,
-                                                task2: _model.taskText2,
-                                                task3: _model.taskText3,
-                                                isComplete2: false,
-                                                isComplete3: false,
-                                              ),
-                                              userTasksRecordReference);
-                                      logFirebaseEvent(
-                                          'IconButton_update_app_state');
-                                      FFAppState().TaskText1 =
-                                          _model.userTaskListGoogle!.task1;
-                                      FFAppState().IsComplete1 = _model
-                                          .userTaskListGoogle!.isComplete1;
-                                      FFAppState().TaskText2 =
-                                          _model.userTaskListGoogle!.task2;
-                                      FFAppState().Iscomplete2 = _model
-                                          .userTaskListGoogle!.isComplete2;
-                                      FFAppState().TaskText3 =
-                                          _model.userTaskListGoogle!.task3;
-                                      FFAppState().IsComplete3 = _model
-                                          .userTaskListGoogle!.isComplete3;
-                                      FFAppState().TaskRef1 =
-                                          _model.userTaskListGoogle?.reference;
-                                      FFAppState().TaskRef2 =
-                                          _model.userTaskListGoogle?.reference;
-                                      FFAppState().TaskRef3 =
-                                          _model.userTaskListGoogle?.reference;
-                                      safeSetState(() {});
-                                      logFirebaseEvent(
                                           'IconButton_navigate_to');
 
-                                      context.pushNamedAuth(
+                                      context.goNamedAuth(
                                           OnboardingWidget.routeName,
                                           context.mounted);
-
-                                      safeSetState(() {});
                                     },
                                   ),
                                 ]

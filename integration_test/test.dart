@@ -99,6 +99,22 @@ void main() async {
     await tester.pumpAndSettle(const Duration(milliseconds: 3000));
     expect(find.text('Daily Task'), findsOneWidget);
   });
+
+  testWidgets('Kadden G US3 Forgot Password', (WidgetTester tester) async {
+    _overrideOnError();
+
+    await tester.pumpWidget(ChangeNotifierProvider(
+      create: (context) => FFAppState(),
+      child: const MyApp(),
+    ));
+    await GoogleFonts.pendingFonts();
+
+    await tester.tap(find.text('Login'));
+    await tester.enterText(find.text('Email'), 'Kaddeng52@uri.edu');
+    await tester.tap(find.text('Forgot Password ?'));
+    await tester.pumpAndSettle(const Duration(milliseconds: 3000));
+    expect(find.text('Email Sent'), findsWidgets);
+  });
 }
 
 // There are certain types of errors that can happen during tests but

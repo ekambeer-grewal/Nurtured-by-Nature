@@ -1,0 +1,130 @@
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'get_support_model.dart';
+export 'get_support_model.dart';
+
+class GetSupportWidget extends StatefulWidget {
+  const GetSupportWidget({super.key});
+
+  static String routeName = 'GetSupport';
+  static String routePath = '/getSupport';
+
+  @override
+  State<GetSupportWidget> createState() => _GetSupportWidgetState();
+}
+
+class _GetSupportWidgetState extends State<GetSupportWidget> {
+  late GetSupportModel _model;
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => GetSupportModel());
+
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'GetSupport'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _model.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        body: SafeArea(
+          top: true,
+          child: SingleChildScrollView(
+            primary: false,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFE4EDDB),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional(-1.0, -1.0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              24.0, 24.0, 0.0, 0.0),
+                          child: FlutterFlowIconButton(
+                            borderRadius: 8.0,
+                            buttonSize: 40.0,
+                            icon: Icon(
+                              Icons.arrow_back,
+                              color: Colors.black,
+                              size: 24.0,
+                            ),
+                            onPressed: () async {
+                              logFirebaseEvent(
+                                  'GET_SUPPORT_PAGE_arrow_back_ICN_ON_TAP');
+                              logFirebaseEvent('IconButton_navigate_back');
+                              context.safePop();
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            12.0, 14.0, 12.0, 12.0),
+                        child: Container(
+                          height: 650.0,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFF7F9F5),
+                            borderRadius: BorderRadius.circular(24.0),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(14.0),
+                            child: Text(
+                              'If you need immediate support, please reach out to any of the following resources or crisis lines now: \n\nLifeline: free and confidential emotional support available 24/7.\nCall or text 988.\nVisit 988lifeline.org for additional information or to chat online.\n\nCrisis Text Line: free, confidential support for anyone, in any type of crisis.\nText HOME to 741741.\nChat online at crisistextline.org\n',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    font: GoogleFonts.istokWeb(
+                                      fontWeight: FontWeight.w300,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    color: Color(0xFF14181B),
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w300,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

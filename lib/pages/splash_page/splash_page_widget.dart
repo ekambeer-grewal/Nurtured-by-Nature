@@ -126,7 +126,7 @@ class _SplashPageWidgetState extends State<SplashPageWidget> {
                         onPressed: () {
                           print('About pressed ...');
                         },
-                        text: 'About the App',
+                        text: 'About Nurtured',
                         options: FFButtonOptions(
                           height: 50.0,
                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -170,7 +170,7 @@ class _SplashPageWidgetState extends State<SplashPageWidget> {
                         onPressed: () {
                           print('Privacy pressed ...');
                         },
-                        text: 'Privacy Policy & Terms',
+                        text: 'Get Support',
                         options: FFButtonOptions(
                           height: 50.0,
                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -214,7 +214,7 @@ class _SplashPageWidgetState extends State<SplashPageWidget> {
                         onPressed: () {
                           print('Contact pressed ...');
                         },
-                        text: 'Contact / Feedback',
+                        text: 'Contact Us',
                         options: FFButtonOptions(
                           height: 50.0,
                           padding: EdgeInsetsDirectional.fromSTEB(
